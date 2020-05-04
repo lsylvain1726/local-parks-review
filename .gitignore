@@ -1,5 +1,8 @@
+/src/main/frontend/node_modules/
+/target/
 HELP.md
 target/
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
 
@@ -29,5 +32,11 @@ build/
 ### VS Code ###
 .vscode/
 
-src/main/frontend/node_modules/**
-**.DS_Store**
+react/coverage/*
+.DS_store
+.bundle
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/src/main/frontend/yarn.lock
+/src/main/frontend/node_modules/
