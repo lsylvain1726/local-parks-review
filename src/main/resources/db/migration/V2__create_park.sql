@@ -2,5 +2,5 @@
         id SERIAL PRIMARY KEY,
         name VARCHAR(100),
         description TEXT,
-        location VARCHAR(100)
+        location_id INTEGER REFERENCES states(id)
     );
