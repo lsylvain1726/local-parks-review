@@ -27,6 +27,14 @@ public class Park {
     @Column
     private String location;
 
-//    @ManyToMany(mappedBy = "parkReviews")
-//    Set<Visitor> parkVisitors = new HashSet<>();
+    @ManyToMany(mappedBy = "parkReviews")
+    Set<Visitor> visitors = new HashSet<>();
+
+//    @ManyToMany()
+//    @JoinTable(
+//        name = "review",
+//        joinColumns = { @JoinColumn(name = "park_id") },
+//        inverseJoinColumns = { @JoinColumn(name = "visitor_id") }
+//    )
+//    Set<Visitor> visitors = new HashSet<>();
 }

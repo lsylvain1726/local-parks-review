@@ -3,10 +3,13 @@ package com.launchacademy.localparksreview.seeders;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.launchacademy.localparksreview.models.Park;
+import com.launchacademy.localparksreview.models.Visitor;
 import com.launchacademy.localparksreview.repositories.ParkRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
@@ -41,13 +44,21 @@ public class ParkSeeder implements CommandLineRunner {
     JsonNode parkData = jsonNode.get("data");
 
     List<Park> listParks = new ArrayList();
+    Set<Visitor> visitors = new HashSet<>();
+    Visitor visitor = new Visitor();
+    visitor.setFirstName("Lauren");
+    visitor.setLastName("Sylvain");
+    visitors.add(visitor);
+
     for(JsonNode eachPark : parkData) {
        Park park = new Park();
        park.setDescription(eachPark.get("description").asText());
        park.setName(eachPark.get("name").asText());
        park.setLocation("ma");
+       park.setVisitors(visitors);
        listParks.add(park);
     }
+
     if(parkRepo.count() == 0) {
       for (Park park : listParks) {
         parkRepo.save(park);
