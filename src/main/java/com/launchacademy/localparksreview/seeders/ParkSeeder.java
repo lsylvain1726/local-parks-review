@@ -29,8 +29,7 @@ public class ParkSeeder implements CommandLineRunner {
     this.parkRepo = parkRepo;
   }
 
-  public String getParks() {
-    final String uri = "https://developer.nps.gov/api/v1/parks?stateCode=ma&api_key=RrRy9TREVxKtqPjCVNLaQhYfdrUtNFrTehHBycDg";
+  public String getParks(String uri) {
     RestTemplate restTemplate = new RestTemplate();
     String result = restTemplate.getForObject(uri, String.class);
     return result;
@@ -39,24 +38,54 @@ public class ParkSeeder implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
-    JsonNode jsonNode = mapper.readTree(getParks());
 
-    JsonNode parkData = jsonNode.get("data");
+    JsonNode jsonMaNode = mapper.readTree(getParks("https://developer.nps.gov/api/v1/parks?stateCode=ma&api_key=RrRy9TREVxKtqPjCVNLaQhYfdrUtNFrTehHBycDg"));
+    JsonNode parkMaData = jsonMaNode.get("data");
+
+    JsonNode jsonNhNode = mapper.readTree(getParks("https://developer.nps.gov/api/v1/parks?stateCode=nh&api_key=RrRy9TREVxKtqPjCVNLaQhYfdrUtNFrTehHBycDg"));
+    JsonNode parkNhData = jsonNhNode.get("data");
+
+    JsonNode jsonVtNode = mapper.readTree(getParks("https://developer.nps.gov/api/v1/parks?stateCode=vt&api_key=RrRy9TREVxKtqPjCVNLaQhYfdrUtNFrTehHBycDg"));
+    JsonNode parkVtData = jsonVtNode.get("data");
 
     List<Park> listParks = new ArrayList();
     Set<Visitor> visitors = new HashSet<>();
+
     Visitor visitor = new Visitor();
     visitor.setFirstName("Lauren");
     visitor.setLastName("Sylvain");
     visitors.add(visitor);
 
-    for(JsonNode eachPark : parkData) {
-       Park park = new Park();
-       park.setDescription(eachPark.get("description").asText());
-       park.setName(eachPark.get("name").asText());
-       park.setLocation("ma");
-       park.setVisitors(visitors);
-       listParks.add(park);
+    Visitor visitorTwo = new Visitor();
+    visitorTwo.setFirstName("Juvenal");
+    visitorTwo.setLastName("Miranda");
+    visitors.add(visitorTwo);
+
+    for(JsonNode eachPark : parkMaData) {
+       Park parkMa = new Park();
+       parkMa.setDescription(eachPark.get("description").asText());
+       parkMa.setName(eachPark.get("fullName").asText());
+       parkMa.setLocation("Massachusetts");
+       parkMa.setVisitors(visitors);
+       listParks.add(parkMa);
+    }
+
+    for(JsonNode eachPark : parkNhData) {
+      Park parkNh = new Park();
+      parkNh.setDescription(eachPark.get("description").asText());
+      parkNh.setName(eachPark.get("fullName").asText());
+      parkNh.setLocation("New Hampshire");
+      parkNh.setVisitors(visitors);
+      listParks.add(parkNh);
+    }
+
+    for(JsonNode eachPark : parkVtData) {
+      Park parkVt = new Park();
+      parkVt.setDescription(eachPark.get("description").asText());
+      parkVt.setName(eachPark.get("fullName").asText());
+      parkVt.setLocation("Vermont");
+      parkVt.setVisitors(visitors);
+      listParks.add(parkVt);
     }
 
     if(parkRepo.count() == 0) {
