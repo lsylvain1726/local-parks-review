@@ -27,7 +27,4 @@ public class Visitor {
     @ManyToMany
     @JoinTable(name = "review", joinColumns = @JoinColumn(name = "visitor_id"), inverseJoinColumns = @JoinColumn(name = "park_id"))
     Set<Park> parkReviews = new HashSet<>();
-
-//    @ManyToMany(mappedBy = "visitors")
-//    private Set<Park> parks = new HashSet<>();
 }

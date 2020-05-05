@@ -6,19 +6,13 @@ import com.launchacademy.localparksreview.models.Park;
 import com.launchacademy.localparksreview.models.Visitor;
 import com.launchacademy.localparksreview.repositories.ParkRepository;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 @Component
 public class ParkSeeder implements CommandLineRunner {
