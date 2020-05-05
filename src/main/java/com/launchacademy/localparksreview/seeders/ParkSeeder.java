@@ -3,8 +3,10 @@ package com.launchacademy.localparksreview.seeders;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.launchacademy.localparksreview.models.Park;
+import com.launchacademy.localparksreview.models.State;
 import com.launchacademy.localparksreview.models.Visitor;
 import com.launchacademy.localparksreview.repositories.ParkRepository;
+import com.launchacademy.localparksreview.repositories.StateRepository;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,11 +19,13 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class ParkSeeder implements CommandLineRunner {
   private ParkRepository parkRepo;
+  private StateRepository stateRepo;
   private final String API_KEY = "8cmiKECeVvQUZMKxdUPBtk2AggXY465FaxZIm2Ed";
 
   @Autowired
-  public void setParkRepository(ParkRepository parkRepo) {
+  public void setParkRepository(ParkRepository parkRepo, StateRepository stateRepo) {
     this.parkRepo = parkRepo;
+    this.stateRepo = stateRepo;
   }
 
   public String getParks(String uri) {
@@ -47,6 +51,7 @@ public class ParkSeeder implements CommandLineRunner {
 
       List<Park> listParks = new ArrayList();
       Set<Visitor> visitors = new HashSet<>();
+      List<State> states = new ArrayList<>();
 
       Visitor visitor = new Visitor();
       visitor.setFirstName("Lauren");
@@ -58,11 +63,30 @@ public class ParkSeeder implements CommandLineRunner {
       visitorTwo.setLastName("Miranda");
       visitors.add(visitorTwo);
 
+
+      State state = new State();
+      state.setName("Massachusetts");
+      states.add(state);
+
+      State stateTwo = new State();
+      stateTwo.setName("Vermont");
+      states.add(stateTwo);
+
+      State stateThree = new State();
+      stateThree.setName("New Hampshire");
+      states.add(stateThree);
+
+      if(stateRepo.count() == 0) {
+        for(State eachState : states) {
+          stateRepo.save(eachState);
+        }
+      }
+
       for(JsonNode eachPark : parkMaData) {
         Park parkMa = new Park();
         parkMa.setDescription(eachPark.get("description").asText());
         parkMa.setName(eachPark.get("fullName").asText());
-        parkMa.setLocation("Massachusetts");
+        parkMa.setState(state);
         parkMa.setVisitors(visitors);
         listParks.add(parkMa);
       }
@@ -71,7 +95,7 @@ public class ParkSeeder implements CommandLineRunner {
         Park parkNh = new Park();
         parkNh.setDescription(eachPark.get("description").asText());
         parkNh.setName(eachPark.get("fullName").asText());
-        parkNh.setLocation("New Hampshire");
+        parkNh.setState(stateThree);
         parkNh.setVisitors(visitors);
         listParks.add(parkNh);
       }
@@ -80,7 +104,7 @@ public class ParkSeeder implements CommandLineRunner {
         Park parkVt = new Park();
         parkVt.setDescription(eachPark.get("description").asText());
         parkVt.setName(eachPark.get("fullName").asText());
-        parkVt.setLocation("Vermont");
+        parkVt.setState(stateTwo);
         parkVt.setVisitors(visitors);
         listParks.add(parkVt);
       }

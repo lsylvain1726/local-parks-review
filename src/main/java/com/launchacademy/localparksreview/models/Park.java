@@ -24,8 +24,9 @@ public class Park {
     @Column
     private String description;
 
-    @Column
-    private String location;
+    @ManyToOne
+    @JoinColumn(name="location_id", nullable = false)
+    private State state;
 
     @ManyToMany(mappedBy = "parkReviews")
     Set<Visitor> visitors = new HashSet<>();
