@@ -1,5 +1,8 @@
 package com.launchacademy.localparksreview.repositories;
 
-public class ParkRepository {
+import com.launchacademy.localparksreview.models.Park;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+public interface ParkRepository extends PagingAndSortingRepository<Park, Integer> {
 
 }
