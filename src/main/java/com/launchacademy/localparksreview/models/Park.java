@@ -28,5 +28,5 @@ public class Park {
     private String location;
 
     @ManyToMany(mappedBy = "parkReviews")
-    Set<Visitor> parkVisitors = new HashSet<>();
+    Set<Visitor> visitors = new HashSet<>();
 }
