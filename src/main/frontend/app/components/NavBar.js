@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Link, Switch, BrowserRouter, Redirect } from "react-router-dom";
 import ReviewFormContainer from "./ReviewFormContainer"
-import ListContainer from "./ListContainer"
+import ParkContainer from "./ParkContainer"
 import ParkShowContainer from "./ParkShowContainer"
 
 const NavBar = () => {
@@ -15,7 +15,7 @@ const NavBar = () => {
 
       <Switch>
         <Route exact path="/review" component={ReviewFormContainer} />
-        <Route exact path="/parks" component={ListContainer} />
+        <Route exact path="/parks" component={ParkContainer} />
         <Route exact path="/:state/:id" component={ParkShowContainer} />
       </Switch>
      
