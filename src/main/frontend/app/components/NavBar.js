@@ -7,7 +7,7 @@ import ParkShowContainer from "./ParkShowContainer"
 const NavBar = () => {
   return(
     <BrowserRouter>
-
+      <h1>Test</h1>
       <ul className="dropdown menu" data-dropdown-menu>
         <li><Link to="/review">Review</Link></li>
         <li><Link to="/parks">Parks</Link></li>
