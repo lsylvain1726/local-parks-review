@@ -3,10 +3,12 @@ package com.launchacademy.localparksreview.seeders;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.launchacademy.localparksreview.models.Park;
+import com.launchacademy.localparksreview.models.Review;
 import com.launchacademy.localparksreview.models.State;
 import com.launchacademy.localparksreview.models.Visitor;
 import com.launchacademy.localparksreview.repositories.ParkRepository;
 import com.launchacademy.localparksreview.repositories.StateRepository;
+import com.launchacademy.localparksreview.repositories.VisitorRepository;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,12 +22,14 @@ import org.springframework.web.client.RestTemplate;
 public class ParkSeeder implements CommandLineRunner {
   private ParkRepository parkRepo;
   private StateRepository stateRepo;
+  private VisitorRepository visitorRepo;
   private final String API_KEY = "8cmiKECeVvQUZMKxdUPBtk2AggXY465FaxZIm2Ed";
 
   @Autowired
-  public void setParkRepository(ParkRepository parkRepo, StateRepository stateRepo) {
+  public void setParkRepository(ParkRepository parkRepo, StateRepository stateRepo, VisitorRepository visitorRepo) {
     this.parkRepo = parkRepo;
     this.stateRepo = stateRepo;
+    this.visitorRepo = visitorRepo;
   }
 
   public String getParks(String uri) {
