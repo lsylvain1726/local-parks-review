@@ -31,4 +31,6 @@ public class Review {
   Visitor visitor;
 
   private String comment;
+
+  private Integer rating;
 }

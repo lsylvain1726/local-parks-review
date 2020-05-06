@@ -10,7 +10,6 @@ const ParkShow = (props) => {
           <div className="card-park-info">
             <h2>{state.name}</h2>
             <p>{description}</p>
-            <ReviewFormContainer />
           </div>
         </div>
       </div>

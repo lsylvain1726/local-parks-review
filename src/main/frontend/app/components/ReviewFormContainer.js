@@ -24,7 +24,8 @@ const ReviewFormContainer = (props) => {
 
 
     const defaultReview = {
-      comment: ""
+      comment: "",
+      rating: ""
     }
 
     const [reviewSubmitted, setReviewSubmitted] = useState(defaultReview)
@@ -40,14 +41,29 @@ const ReviewFormContainer = (props) => {
     const handleReviewSubmit = event => {
       event.preventDefault()
 
+      let ratingNumber = parseInt(reviewSubmitted.rating)
+
       let formPayload = {
         comment: reviewSubmitted.comment,
-        park: {id:1, name:"Appalachian National Scenic Trail, description=The Appalachian Trail is a 2,180+ mile long public footpath that traverses the scenic, wooded, pastoral, wild, and culturally resonant lands of the Appalachian Mountains. Conceived in 1921, built by private citizens, and completed in 1937, today the trail is managed by the National Park Service, US Forest Service, Appalachian Trail Conservancy, numerous state agencies and thousands of volunteers.", location:"Vermont", visitors:[{id:1, firstName:"Juvenal", lastName:"Miranda", parkReviews:[]}]},
+        rating: ratingNumber,
+        park: props.park,
         visitor: {id:1, firstName:"Juvenal", lastName:"Miranda", parkReviews:[]}
       }
 
+      console.log(ratingNumber)
+      console.log(props.park)
+
       addReview(formPayload)
     }
+
+    const allRatings = ["1", "2", "3", "4", "5"]
+    const ratingOptions = [""].concat(allRatings).map((option) => {
+    return (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    )
+  })
 
   return(
     <div className="wrapper-review-form">
@@ -57,6 +73,12 @@ const ReviewFormContainer = (props) => {
           <label htmlFor="comment">Comment</label>
           <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={reviewSubmitted.comment}  />
         </div>
+        <div className="small-12 medium-6 columns">
+            <label htmlFor="rating">Rating</label>
+            <select name="rating" id="rating" onChange={handleReviewChange} value={reviewSubmitted.rating} >
+                  {ratingOptions}
+            </select>
+          </div>
         <div className="small-12 columns">
           <input type="submit" className="button button-submit" value="Leave A Review!" />
         </div>
