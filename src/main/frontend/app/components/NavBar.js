@@ -5,7 +5,7 @@ import ReviewFormContainer from "./ReviewFormContainer"
 const NavBar = (props) => {
   return(
     <BrowserRouter>
-
+      <h1>Test</h1>
       <ul className="dropdown menu" data-dropdown-menu>
         <li><Link to="/review">Review</Link></li>
       </ul>

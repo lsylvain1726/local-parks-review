@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import ReactDom from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from "./components/App"
 
-const App = props => {
-  return <h1>Hello from React</h1>;
-};
-
-ReactDom.render(<App />, document.getElementById("app"));
+ReactDOM.render(
+  <App />,
+  document.getElementById('app')
+);
