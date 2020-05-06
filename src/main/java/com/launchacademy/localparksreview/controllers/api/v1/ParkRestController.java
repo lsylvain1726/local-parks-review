@@ -12,24 +12,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/parks")
 public class ParkRestController {
-  private ParkRepository parkRepo;
+    private ParkRepository parkRepo;
 
-  @Autowired
-  public void setParkRepo(ParkRepository parkRepo) {
-    this.parkRepo = parkRepo;
-  }
 
-  @GetMapping
-  public Iterable<Park> getAll(){
-    return parkRepo.findAll();
-  }
-
-  @GetMapping("/{state}/{id}")
-  public Park getParkByState(@PathVariable String state, @PathVariable Integer id){
-    Park park = parkRepo.findById(id).orElseThrow(() -> new UrlNotFoundException());
-    if (!park.getState().getName().equals(state)) {
-      throw new UrlNotFoundException();
+    @Autowired
+    public void setParkRepo(ParkRepository parkRepo) {
+        this.parkRepo = parkRepo;
     }
-    return park;
-  }
+
+
+    @GetMapping
+    public Iterable<Park> getAll() {
+        return parkRepo.findAll();
+    }
+
+    @GetMapping("/{state}/{id}")
+    public Park getParkByState(@PathVariable String state, @PathVariable Integer id) {
+        Park park = parkRepo.findById(id).orElseThrow(() -> new UrlNotFoundException());
+        if (!park.getState().getName().equals(state)) {
+            throw new UrlNotFoundException();
+        }
+        return park;
+    }
 }
