@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import StateList from "./StateList"
 import HeroHeader from "./HeroHeader"
 
+
 const StateContainer = (props) => {
     const [states, setStates] = useState([]);
     useEffect(() => {
@@ -25,9 +26,11 @@ const StateContainer = (props) => {
             });
         });
     }, []);
+
     const listOfStates = states.map(state => {
         return <StateList key={state.id} data={state}/>
     })
+
     return (
       <Fragment>
         <HeroHeader />
@@ -36,7 +39,7 @@ const StateContainer = (props) => {
             <div className="small-12 columns">
               <h2 className="wrapper-state-title">Choose A State</h2>
             </div>
-            {listOfStates}
+              {listOfStates}
           </div>
         </div>
       </Fragment>
