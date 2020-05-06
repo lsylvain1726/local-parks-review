@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 import ParkShow from "./ParkShow"
 
 const ParkShowContainer = (props) => {
@@ -28,9 +28,18 @@ const ParkShowContainer = (props) => {
   }, {})
 
   return (
-    <div>
-        <ParkShow key={park.id} data={park}/>
-    </div>
+    <Fragment>
+      <div className={`wrapper-interior-header wrapper-interior-park`}>
+        <div className="row">
+          <div className="small-12 columns">
+            <h1 className="park-header-title">{park.name}</h1>
+          </div>
+        </div>
+      </div>
+      <div className="wrapper-individual-pet">
+      <ParkShow key={park.id} data={park}/>
+      </div>
+    </Fragment>
   )
 }
 

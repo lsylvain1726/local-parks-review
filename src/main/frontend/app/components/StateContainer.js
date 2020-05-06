@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
+import StateList from "./StateList"
+import HeroHeader from "./HeroHeader"
 
 const StateContainer = (props) => {
     const [states, setStates] = useState([]);
@@ -23,13 +25,21 @@ const StateContainer = (props) => {
             });
         });
     }, []);
-    const listOfStates =states.map(state => {
+    const listOfStates = states.map(state => {
         return <StateList key={state.id} data={state}/>
     })
     return (
-        <div>
+      <Fragment>
+        <HeroHeader />
+        <div className="wrapper-state">
+          <div className="row">
+            <div className="small-12 columns">
+              <h2 className="wrapper-state-title">Choose A State</h2>
+            </div>
             {listOfStates}
+          </div>
         </div>
+      </Fragment>
     );
 };
 
