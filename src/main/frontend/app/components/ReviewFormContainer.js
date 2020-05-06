@@ -50,9 +50,6 @@ const ReviewFormContainer = (props) => {
         visitor: {id:1, firstName:"Juvenal", lastName:"Miranda", parkReviews:[]}
       }
 
-      console.log(ratingNumber)
-      console.log(props.park)
-
       addReview(formPayload)
     }
 
