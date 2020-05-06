@@ -5,11 +5,14 @@ const ParkShow = (props) => {
   const { name, description, state } = props.data
   if (props.data.name) {
     return (
-      <div>
-        <h1>{name}</h1>
-        <h2>{state.name}</h2>
-        <p>{description}</p>
-        <ReviewFormContainer />
+      <div className="row">
+        <div className="columns small-12">
+          <div className="card-park-info">
+            <h2>{state.name}</h2>
+            <p>{description}</p>
+            <ReviewFormContainer />
+          </div>
+        </div>
       </div>
     )
   } else {

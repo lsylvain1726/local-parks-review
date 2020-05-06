@@ -1,4 +1,4 @@
-import React, { useEffect , useState} from "react";
+import React, { useEffect , useState, Fragment} from "react";
 import ParkList from "../components/ParkList";
 
 const ParkContainer = (props) => {
@@ -29,9 +29,20 @@ const ParkContainer = (props) => {
     return <ParkList key={park.id} data={park}/>
   })
   return (
-    <div>
-      {listOfParks}
-    </div>
+    <Fragment>
+      <div className={`wrapper-interior-header`}>
+        <div className="row">
+          <div className="small-12 columns">
+            <h1 className="park-header-title">All Parks</h1>
+          </div>
+        </div>
+        </div>
+        <div className="wrapper-parks">
+          <div className="row">
+            {listOfParks}
+          </div>
+        </div>
+    </Fragment>
   );
 };
 export default ParkContainer
