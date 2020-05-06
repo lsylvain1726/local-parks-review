@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import _ from 'lodash'
 
 const VisitorForm = props => {
    const defaultForm= {
@@ -7,6 +8,7 @@ const VisitorForm = props => {
    }
 
 const [visitorForm, setVisitorForm] = useState(defaultForm)
+const [errors, setErrors] = useState("")
 
 const validForSubmission = () => {
     let submitErrors = {}
@@ -25,29 +27,49 @@ const validForSubmission = () => {
 
 const handleChange = event => {
     setVisitorForm({
-        ...visitorFormSubmitted,
+        ...visitorForm,
         [event.currentTarget.id]: event.currentTarget.value
     })
 }
-const handleSubmit = event =>{
-    event.preventDefault()
-    let formPayload ={
-        firstName:visitorFormSubmitted.firstName,
-        lastName:visitorFormSubmitted.lastName 
-    }
-    if(validForSubmission()){
-        props.addVisitor(formPayload)
-        props.setShowForm(false)
-    }
+const handleSubmit = formPayload =>{
+   fetch(`api/v1/visitor`, {
+       method: "POST",
+       body: JSON.stringify(formPayload),
+       headers: {
+           "Content-Type": "form/json"
+       }
+   })
+   .then(response => {
+       if(response.ok) {
+           return response
+       } else {
+           let errorMessage= `${response.status} (${response.statusText})`,
+           error= new
+           Error(errorMessage)
+           throw error
+       }
+   })
+   .then(response => {
+    response.json()
+  })
+  .catch(error => console.error(`Error in fetch: ${error.message}`))
+
 }
+
+
 
 return(
     <form onSubmit={handleSubmit}>
         <div>
-            <input type="text" name="first_name" id="first_name" onChange={handleChange}></input>
+            <label htmlFor="firstName">First Name</label>
+            <input type="text" name="firstName" id="firstName" onChange={handleChange}></input>
         </div>
         <div>
-            <input type="text" name="last_name" id="last_name" onChange={handleChange}></input>
+            <label htmlFor="lastName">Last Name</label>
+            <input type="text" name="lastName" id="lastName" onChange={handleChange}></input>
+        </div>
+        <div>
+            <input name="button" type="submit" className="button" />
         </div>
     </form>
 )
