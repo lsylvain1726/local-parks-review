@@ -3,6 +3,7 @@ package com.launchacademy.localparksreview.controllers.api.v1;
 import com.launchacademy.localparksreview.exceptions.UrlNotFoundException;
 import com.launchacademy.localparksreview.models.Park;
 import com.launchacademy.localparksreview.repositories.ParkRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,11 @@ public class ParkRestController {
     @GetMapping
     public Iterable<Park> getAll() {
         return parkRepo.findAll();
+    }
+
+    @GetMapping("/{state}")
+    public List<Park> getParks(@PathVariable String state){
+        return parkRepo.findByState(state);
     }
 
     @GetMapping("/{state}/{id}")
