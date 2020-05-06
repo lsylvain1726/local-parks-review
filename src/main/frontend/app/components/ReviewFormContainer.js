@@ -22,7 +22,6 @@ const ReviewFormContainer = (props) => {
       .catch(error => console.error(`Error in fetch: ${error.message}`))
     }
 
-
     const defaultReview = {
       comment: "",
       rating: ""
