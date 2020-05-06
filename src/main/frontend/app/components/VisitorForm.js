@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from React;
+import React, {useState, useEffect} from 'react';
 
 const VisitorForm = props => {
    const defaultForm= {
@@ -43,7 +43,6 @@ const handleSubmit = event =>{
 
 return(
     <form onSubmit={handleSubmit}>
-        <ErrorList errors={errors} />
         <div>
             <input type="text" name="first_name" id="first_name" onChange={handleChange}></input>
         </div>

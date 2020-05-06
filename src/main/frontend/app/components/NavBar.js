@@ -4,6 +4,7 @@ import ReviewFormContainer from "./ReviewFormContainer"
 import ParkContainer from "./ParkContainer"
 import ParkShowContainer from "./ParkShowContainer"
 import StateContainer from "./StateContainer"
+import VisitorForm from "./VisitorForm"
 
 const NavBar = () => {
   return(
@@ -26,7 +27,8 @@ const NavBar = () => {
               <div className="top-bar-right" id="responsive-menu">
               <ul className="dropdown menu" data-dropdown-menu>
                     <li><Link to="/parks">Parks</Link></li>
-                    <li><Link to="/review">Review</Link></li>         
+                    <li><Link to="/review">Review</Link></li>    
+                    <li><Link to="/visitor">Visitor</Link></li>     
                 </ul>
               </div>
             </div>
@@ -39,6 +41,7 @@ const NavBar = () => {
         <Route exact path="/parks" component={ParkContainer} />
         <Route exact path="/parks/:state/:id" component={ParkShowContainer} />
         <Route exact path="/review" component={ReviewFormContainer} />
+        <Route exact path="/visitor" component={VisitorForm} />
       </Switch>
      
     </BrowserRouter>
