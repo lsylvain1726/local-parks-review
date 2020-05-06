@@ -3,9 +3,11 @@ import ParksByStateTile from "./ParksByStateTile";
 
 const ParksByStateContainer = props => {
     const [parks, setParks] = useState([]);
-    const state = props.match.params.type;
+
+    const state = props.match.params.state;
+
     useEffect(() => {
-        fetch(`/api/v1/states/${state}`)
+        fetch(`/api/v1/parks/${state}`)
             .then(response => {
                 if (response.ok) {
                     return response
@@ -22,20 +24,14 @@ const ParksByStateContainer = props => {
             .catch(error => {
                 error => console.error(`Error in fetch: ${error.message}`)
             })
-    }, [])
+    })
 
     const mapParks = parks.map(park => {
         return (
             <ParksByStateTile
                 key={park.id}
-                imgUrl={park.images[0].url}
-                name={park.fullName}
-                operatingHours={park.operatingHours[0].standardHours}
-                operatingHoursDescription={park.operatingHours[0].description}
-                exceptionHours={park.operatingHours[0].exceptions.exceptionHours}
-                exceptionHoursDescription={park.operatingHours[0].exceptions[0].name}
-                exceptionHoursStartDate={park.operatingHours[0].exceptions[0].startDate}
-                exceptionHoursEndDate={park.operatingHours[0].exceptions[0].endDate}
+                name={park.name}
+                description={park.description}
             />
         )
     });

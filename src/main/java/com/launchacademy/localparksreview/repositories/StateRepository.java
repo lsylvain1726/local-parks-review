@@ -5,4 +5,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface StateRepository extends PagingAndSortingRepository<State,Integer> {
 
+  State findByName(String state);
 }
