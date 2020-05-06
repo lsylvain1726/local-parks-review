@@ -1,12 +1,8 @@
-import ReactDom from "react-dom";
-import ParkContainer from "./components/ParkContainer";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from "./components/App"
 
-const App = (props) => {
-  return (
-    <div>
-      <ParkContainer />
-    </div>
-  );
-};
-
-ReactDom.render(<App />, document.getElementById("app"));
+ReactDOM.render(
+  <App />,
+  document.getElementById('app')
+);
