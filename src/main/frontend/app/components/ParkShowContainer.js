@@ -37,7 +37,7 @@ const ParkShowContainer = (props) => {
         </div>
       </div>
       <div className="wrapper-individual-pet">
-      <ParkShow key={park.id} data={park}/>
+        <ParkShow key={park.id} data={park}/>
       </div>
     </Fragment>
   )
