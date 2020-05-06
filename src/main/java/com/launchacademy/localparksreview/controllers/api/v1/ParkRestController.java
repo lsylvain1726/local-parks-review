@@ -37,7 +37,7 @@ public class ParkRestController {
         return parkRepo.findAll();
     }
 
-    @GetMapping("/{state}/{id}")
+    @GetMapping("{state}/{id}")
     public Park getParkByState(@PathVariable String state, @PathVariable Integer id) {
         Park park = parkRepo.findById(id).orElseThrow(() -> new UrlNotFoundException());
         if (!park.getState().getName().equals(state)) {

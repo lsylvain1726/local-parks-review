@@ -50,15 +50,19 @@ const ReviewFormContainer = (props) => {
     }
 
   return(
-    <form onSubmit={handleReviewSubmit}>
-      <div className="small-12 medium-6 columns">
-        <label htmlFor="comment">Comment</label>
-        <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={reviewSubmitted.comment}  />
+    <div className="wrapper-review-form">
+      <div className="row">
+      <form onSubmit={handleReviewSubmit}>
+        <div className="small-12 medium-6 columns">
+          <label htmlFor="comment">Comment</label>
+          <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={reviewSubmitted.comment}  />
+        </div>
+        <div className="small-12 columns">
+          <input type="submit" className="button button-submit" value="Leave A Review!" />
+        </div>
+      </form>
       </div>
-      <div className="small-12 columns">
-        <input type="submit" className="button button-submit" value="Leave A Review!" />
-      </div>
-    </form>
+    </div>
   )
 }
 

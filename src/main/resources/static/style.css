@@ -1,3 +1,122 @@
-h1 {
-  color: blue;
+/* Hero Header */
+
+.hero-header {
+  position: relative;
+  text-align:center;
+}
+
+.hero-img {
+  position: relative;
+}
+
+.hero-img img {
+  width: 100%;
+}
+
+.hero-img:before {
+  content: "";
+  position: absolute;
+  left: 0; 
+  right: 0;
+  top: 0; 
+  bottom: 0;
+  background: rgba(0,0,0,.5);
+}
+
+.hero-caption {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hero-caption h2 {
+  font-size: 2rem;
+  color: #5CDB95;
+}
+
+.hero-caption p {
+  color: #fff;
+}
+
+/* Large and up */
+@media screen and (min-width: 64em) {
+
+  .hero-caption {
+    left: 150px;
+    right: 150px;
+  }
+
+  .hero-caption h2 {
+    font-size: 4rem
+  }
+}
+
+/* All Parks */
+
+.card-all-parks-title {
+  font-size: 1.25rem;
+}
+
+/* Individual Parks Page */
+
+.wrapper-interior-header {
+  position: relative;
+  z-index: -1;
+  min-height: 100px;
+  background-color: #eee;
+}
+
+.park-header-title {
+  position: absolute;
+  color: #2f2fa2;
+  top: 50%;
+  transform: translateY(-50%);
+  text-transform: capitalize;
+}
+
+.wrapper-individual-park {
+  padding: 3.75rem;
+}
+
+.card-park-info {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.list-park-info {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-park-info img{
+  margin-bottom: 1rem;
+}
+
+.park-info-title {
+  font-weight: 700;
+  color: #242582;
+}
+
+.button-wrapper {
+  margin-top: 1rem;
+}
+
+.button-wrapper .button {
+  width: 30%;
+}
+
+/* Footer */
+
+footer {
+  background-color: #05386B;
+  color: #fff;
+  text-align: center;
+  padding: 1.25rem;
+}
+
+footer p {
+  margin-bottom: 0;
 }
