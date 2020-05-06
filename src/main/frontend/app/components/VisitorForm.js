@@ -32,6 +32,8 @@ const handleChange = event => {
     })
 }
 const handleSubmit = formPayload =>{
+    if (validForSubmission) {
+        console.log(JSON.stringify(formPayload))
    fetch(`api/v1/visitor`, {
        method: "POST",
        body: JSON.stringify(formPayload),
@@ -53,13 +55,13 @@ const handleSubmit = formPayload =>{
     response.json()
   })
   .catch(error => console.error(`Error in fetch: ${error.message}`))
-
+    }
 }
 
 
 
 return(
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}  >
         <div>
             <label htmlFor="firstName">First Name</label>
             <input type="text" name="firstName" id="firstName" onChange={handleChange}></input>
