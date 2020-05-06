@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1/states")
 public class StateController {
-private StateRepository stateRepo;
 
-@Autowired
-  public void setStateRepo(StateRepository stateRepo){
-  this.stateRepo = stateRepo;
-}
-@GetMapping
-public Iterable<State>getList() {
-  return stateRepo.findAll();
-}
+  private StateRepository stateRepo;
+
+  @Autowired
+  public void setStateRepo(StateRepository stateRepo) {
+    this.stateRepo = stateRepo;
+  }
+
+  @GetMapping
+  public Iterable<State> getList() {
+    return stateRepo.findAll();
+  }
 }

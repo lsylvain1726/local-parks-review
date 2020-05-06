@@ -40,3 +40,4 @@ yarn-debug.log*
 yarn-error.log*
 /src/main/frontend/yarn.lock
 /src/main/frontend/node_modules/
+/.mvn/wrapper/maven-wrapper.jar
