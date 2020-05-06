@@ -24,14 +24,11 @@ const StateContainer = (props) => {
         });
     }, []);
     const listOfStates =states.map(state => {
-        return <StateList 
-        key={state.id}
-        data={state}
-        />
+        return <StateList key={state.id} data={state}/>
     })
     return (
         <div>
-        {listOfStates}
+            {listOfStates}
         </div>
     );
 };
