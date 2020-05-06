@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import ParksByStateTile from "./components/ParksByStateTile";
+import ParksByStateTile from "./ParksByStateTile";
 
 const ParksByStateContainer = props => {
     const [parks, setParks] = useState([]);
-    const state = props.match.params.state;
+    const state = props.match.params.type;
     useEffect(() => {
         fetch(`/api/v1/states/${state}`)
             .then(response => {
@@ -33,11 +33,11 @@ const ParksByStateContainer = props => {
                 operatingHours={park.operatingHours[0].standardHours}
                 operatingHoursDescription={park.operatingHours[0].description}
                 exceptionHours={park.operatingHours[0].exceptions.exceptionHours}
-                exceptionHoursDescription={park.operatingHours[0].exceptions.[0].name}
-                exceptionHoursStartDate={park.operatingHours[0].exceptions.[0].startDate}
-                exceptionHoursEndDate={park.operatingHours[0].exceptions.[0].endDate}
-
-            />)
+                exceptionHoursDescription={park.operatingHours[0].exceptions[0].name}
+                exceptionHoursStartDate={park.operatingHours[0].exceptions[0].startDate}
+                exceptionHoursEndDate={park.operatingHours[0].exceptions[0].endDate}
+            />
+        )
     });
 
     return (
