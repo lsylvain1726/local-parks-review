@@ -28,9 +28,9 @@ const NavBar = () => {
               <ul className="dropdown menu" data-dropdown-menu>
                     <li><Link to="/parks">Parks</Link></li>
                     <li><Link to="/review">Review</Link></li>
-                    <li><Link to="/Massachusetts">MA Parks</Link></li>
-                    <li><Link to="/New Hampshire">NH Parks</Link></li>
-                    <li><Link to="/Vermont">VT Parks</Link></li>
+                    <li><Link to="/parks/Massachusetts">MA Parks</Link></li>
+                    <li><Link to="/parks/New Hampshire">NH Parks</Link></li>
+                    <li><Link to="/parks/Vermont">VT Parks</Link></li>
                 </ul>
               </div>
             </div>
@@ -41,8 +41,8 @@ const NavBar = () => {
       <Switch>
         <Route exact path="/" component={StateContainer} />
         <Route exact path="/parks" component={ParkContainer} />
-        <Route exact path="/:state/:id" component={ParkShowContainer} />
-        <Route exact path="/:state" component={ParksByStateContainer} />
+        <Route exact path="/parks/:state/:id" component={ParkShowContainer} />
+        <Route exact path="/parks/:state" component={ParksByStateContainer} />
         <Route exact path="/review" component={ReviewFormContainer} />
       </Switch>
      
