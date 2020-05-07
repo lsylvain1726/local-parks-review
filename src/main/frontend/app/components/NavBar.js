@@ -25,7 +25,7 @@ const NavBar = () => {
                     <li><Link to="/parks">All Parks</Link></li>
                     <li>
                       <a href="#">Parks By State</a>
-                      <ul class="menu vertical">
+                      <ul className="menu vertical">
                         <li><Link to="/parks/Massachusetts">MA Parks</Link></li>
                         <li><Link to="/parks/New Hampshire">NH Parks</Link></li>
                         <li><Link to="/parks/Vermont">VT Parks</Link></li>

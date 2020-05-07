@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="row">
         <div className="small-12 columns">
           <p>&copy; Copyright Park Reviews</p>
-          <p>Powered by Aslihan, Lauren, Juvenal & Sam</p>
+          <p>Powered by Aslihan, Lauren, Juvenal & Samuel</p>
         </div>
       </div>
     </footer>

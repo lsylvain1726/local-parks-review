@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const StateList = (props) => {
     const state = props.data
-
+    
     return(
       <div className="small-12 medium-4 columns">
         <div className="card-state">
