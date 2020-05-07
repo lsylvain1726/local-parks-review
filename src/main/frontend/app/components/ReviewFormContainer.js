@@ -1,4 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import ErrorList from "./ErrorList"
+import _ from 'lodash'
 
 const ReviewFormContainer = (props) => {
     const addReview = formPayload => {
@@ -28,6 +30,23 @@ const ReviewFormContainer = (props) => {
     }
 
     const [reviewSubmitted, setReviewSubmitted] = useState(defaultReview)
+    const [errors, setErrors] = useState({})
+
+    const validForSubmission = () => {
+      let submitErrors = {}
+      const requiredFields = ["comment", "rating"]
+      requiredFields.forEach((field) => {
+        if (reviewSubmitted[field].trim() === "") {
+          submitErrors = {
+            ...submitErrors,
+            [field]: "is blank"
+          }
+        }
+      })
+    
+      setErrors(submitErrors)
+      return _.isEmpty(submitErrors)
+    }
 
     const handleReviewChange = event => {
       event.preventDefault()
@@ -46,10 +65,12 @@ const ReviewFormContainer = (props) => {
         comment: reviewSubmitted.comment,
         rating: ratingNumber,
         park: props.park,
-        visitor: {id:1, firstName:"Juvenal", lastName:"Miranda", parkReviews:[]}
       }
 
-      addReview(formPayload)
+      if (validForSubmission()) {
+        addReview(formPayload)
+        setReviewSubmitted(defaultReview)
+      }
     }
 
     const allRatings = ["1", "2", "3", "4", "5"]
@@ -65,6 +86,7 @@ const ReviewFormContainer = (props) => {
     <div className="wrapper-review-form">
       <div className="row">
       <form onSubmit={handleReviewSubmit}>
+        <ErrorList errors={errors} />
         <div className="small-12 medium-6 columns">
           <label htmlFor="comment">Comment</label>
           <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={reviewSubmitted.comment}  />

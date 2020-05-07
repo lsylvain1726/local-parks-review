@@ -2,6 +2,7 @@ package com.launchacademy.localparksreview.controllers.api.v1;
 
 import com.launchacademy.localparksreview.models.Review;
 import com.launchacademy.localparksreview.repositories.ReviewRepository;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -36,7 +37,7 @@ public class ReviewRestController {
   }
 
   @PostMapping
-  public Review newPet(@RequestBody Review review, BindingResult bindingResult) {
+  public Review newPet(@RequestBody @Valid Review review, BindingResult bindingResult) {
     if(bindingResult.hasErrors()) {
       throw new InvalidReviewException();
     } else {

@@ -1,3 +1,4 @@
 ALTER TABLE visitor
     ADD COLUMN email VARCHAR(255) NOT NULL,
     ADD COLUMN password VARCHAR(255) NOT NULL;
+

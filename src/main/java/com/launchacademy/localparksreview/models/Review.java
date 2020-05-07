@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -27,10 +29,12 @@ public class Review {
   Park park;
 
   @ManyToOne
-  @JoinColumn(name = "visitor_id")
+  @JoinColumn(name = "visitor_id", nullable = true)
   Visitor visitor;
 
+  @NotBlank
   private String comment;
 
+  @NotNull
   private Integer rating;
 }
