@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import ParksByStateTile from "./ParksByStateTile";
 
 const ParksByStateContainer = props => {
@@ -41,12 +41,20 @@ const ParksByStateContainer = props => {
     });
 
     return (
-        <div>
-            <h2>Find A Park In {state}!</h2>
-            <div>
-                {mapParks}
+      <Fragment>
+        <div className={`wrapper-interior-header`}>
+          <div className="row">
+            <div className="small-12 columns">
+              <h1 className="park-header-title">Find A Park In {state}</h1>
             </div>
+          </div>
         </div>
+        <div className="wrapper-park-by-state">
+          <div className="row">
+            {mapParks}
+          </div>
+        </div>
+      </Fragment>
     );
 };
 
