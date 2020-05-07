@@ -1,0 +1,3 @@
+ALTER TABLE visitor
+    ADD COLUMN email VARCHAR(255),
+    ADD COLUMN password VARCHAR(255);
