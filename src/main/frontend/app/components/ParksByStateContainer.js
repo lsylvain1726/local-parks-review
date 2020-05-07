@@ -32,8 +32,10 @@ const ParksByStateContainer = props => {
         return (
             <ParksByStateTile
                 key={park.id}
+                id={park.id}
                 name={park.name}
                 description={park.description}
+                state={state}
             />
         )
     });
