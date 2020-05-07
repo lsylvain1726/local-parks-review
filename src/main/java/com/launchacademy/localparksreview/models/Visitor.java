@@ -1,6 +1,9 @@
 package com.launchacademy.localparksreview.models;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -18,11 +21,22 @@ public class Visitor {
     @Column(name = "id", nullable = false, unique = true)
     private Integer id;
 
+    @NotBlank
     @Column(name = "first_name")
     private String firstName;
 
+    @NotBlank
     @Column(name = "last_name")
     private String lastName;
+
+    @Email
+    @Column(name = "email")
+    private String email;
+
+    @NotBlank
+    @Column(name = "password")
+    private String password;
+
 
     @ManyToMany
     @JoinTable(name = "review", joinColumns = @JoinColumn(name = "visitor_id"), inverseJoinColumns = @JoinColumn(name = "park_id"))
