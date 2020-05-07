@@ -6,20 +6,25 @@ const VisitorFormContainer = () => {
     email: "",
     password: "",
   };
+
   const [visitor, setVisitor] = useState(defaultFormValue);
+
   const handleInputChange = (event) => {
     setVisitor({
       ...visitor,
       [event.currentTarget.id]: event.currentTarget.value,
     });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     submitForm();
   };
+
   const clearForm = () => {
       setVisitor(defaultFormValue)
   }
+
   const submitForm = () => {
     fetch("/api/v1/visitors", {
       method: "POST",
@@ -38,6 +43,7 @@ const VisitorFormContainer = () => {
       })
       .catch((error) => console.error(`Error in fetch: ${error.message}`));
   };
+  
   return (
     <div>
       <form onSubmit={handleSubmit}>
