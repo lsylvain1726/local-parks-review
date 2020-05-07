@@ -4,7 +4,9 @@ import ParksByStateTile from "./ParksByStateTile";
 const ParksByStateContainer = props => {
     const [parks, setParks] = useState([]);
 
-    const state = props.match.params.state;
+    let state = props.match.params.state;
+
+    let stateNoSpace = state.replace(/\s+/g, '')
 
     useEffect(() => {
         fetch(`/api/v1/parks/${state}`)

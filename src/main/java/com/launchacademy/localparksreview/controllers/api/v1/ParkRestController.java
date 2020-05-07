@@ -32,7 +32,7 @@ public class ParkRestController {
         return parkRepo.findAll();
     }
 
-    @GetMapping("/{state}")
+    @GetMapping("{state}")
     public List<Park> parkList(@PathVariable String state){
         State state1 = stateRepository.findByName(state);
         return parkRepo.findAllByState(state1);
