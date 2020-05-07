@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.apache.commons.lang3.StringUtils;
 
 @RestController
 @RequestMapping("/api/v1/parks")
@@ -34,7 +35,7 @@ public class ParkRestController {
 
     @GetMapping("{state}")
     public List<Park> parkList(@PathVariable String state){
-        State state1 = stateRepository.findByName(state);
+        State state1 = (stateRepository.findByName(state));
         return parkRepo.findAllByState(state1);
     }
 

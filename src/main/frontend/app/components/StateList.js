@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const StateList = (props) => {
     const state = props.data
-    const path = "/" + state.name;
+    const path = "/parks/" + state.name;
 
     return(
       <div className="small-12 medium-4 columns">
