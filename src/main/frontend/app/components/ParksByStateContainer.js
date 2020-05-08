@@ -23,19 +23,14 @@ const ParksByStateContainer = props => {
             .then(body => {
                 setParks(body)
             })
-            .catch(error => {
-                error => console.error(`Error in fetch: ${error.message}`)
-            })
-    })
+            .catch(error => console.error(`Error in fetch: ${error.message}`))
+    }, [state])
 
     const mapParks = parks.map(park => {
         return (
             <ParksByStateTile
                 key={park.id}
-                id={park.id}
-                name={park.name}
-                description={park.description}
-                state={state}
+                park={park}
             />
         )
     });
