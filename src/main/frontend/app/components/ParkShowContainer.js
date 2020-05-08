@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react"
 import ParkShow from "./ParkShow"
 import ReviewFormContainer from "./ReviewFormContainer"
+import ReviewShow from "./ReviewShow"
 
 const ParkShowContainer = (props) => {
   const { state, id } = props.match.params
@@ -28,6 +29,40 @@ const ParkShowContainer = (props) => {
       })
   }, {})
 
+  const [listReviews, setListReviews] = useState([])
+  useEffect(() => {
+    fetch(`/api/v1/review`)
+      .then((response) => {
+        if (response.ok) {
+          return response
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage)
+          throw error
+        }
+      })
+      .then((result) => {
+        return result.json()
+      })
+      .then((json) => {
+        setListReviews(json)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+
+  const listReviewsByState = listReviews.map((review) => {
+    if(park.id === review.park.id) {
+      return(
+        <ReviewShow
+          key={review.id} 
+          review={review}
+        />
+      )
+    }
+  })
+
   return (
     <Fragment>
       <div className={`wrapper-interior-header wrapper-interior-park`}>
@@ -43,6 +78,7 @@ const ParkShowContainer = (props) => {
           park={park}
         />
       </div>
+      {listReviewsByState}
     </Fragment>
   )
 }
