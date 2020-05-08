@@ -122,8 +122,9 @@
                         </goals>
                     </execution>
                 </executions>
-                <plugin>
-                    <groupId>com.heroku.sdk</groupId>
+            </plugin>
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
                     <artifactId>heroku-maven-plugin</artifactId>
                     <version>3.0.2</version>
                     <configuration>
@@ -132,7 +133,6 @@
                         </processTypes>
                     </configuration>
                 </plugin>
-            </plugin>
         </plugins>
     </build>
 </project>
