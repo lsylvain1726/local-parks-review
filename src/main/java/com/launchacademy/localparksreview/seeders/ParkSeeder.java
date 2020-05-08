@@ -3,30 +3,28 @@ package com.launchacademy.localparksreview.seeders;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.launchacademy.localparksreview.models.Park;
-import com.launchacademy.localparksreview.models.Review;
 import com.launchacademy.localparksreview.models.State;
 import com.launchacademy.localparksreview.models.Visitor;
 import com.launchacademy.localparksreview.repositories.ParkRepository;
 import com.launchacademy.localparksreview.repositories.StateRepository;
 import com.launchacademy.localparksreview.repositories.VisitorRepository;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class ParkSeeder implements CommandLineRunner {
-  private ParkRepository parkRepo;
-  private StateRepository stateRepo;
-  private VisitorRepository visitorRepo;
+public class ParkSeeder {
+  private final ParkRepository parkRepo;
+  private final StateRepository stateRepo;
+  private final VisitorRepository visitorRepo;
   private final String API_KEY = "8cmiKECeVvQUZMKxdUPBtk2AggXY465FaxZIm2Ed";
+  private List<Park> listParks;
 
   @Autowired
-  public void setParkRepository(ParkRepository parkRepo, StateRepository stateRepo, VisitorRepository visitorRepo) {
+  public ParkSeeder(ParkRepository parkRepo, StateRepository stateRepo, VisitorRepository visitorRepo) {
     this.parkRepo = parkRepo;
     this.stateRepo = stateRepo;
     this.visitorRepo = visitorRepo;
@@ -38,10 +36,8 @@ public class ParkSeeder implements CommandLineRunner {
     return result;
   }
 
-  @Override
   public void run(String... args) throws Exception {
 
-    if(parkRepo.count() == 0) {
       ObjectMapper mapper = new ObjectMapper();
 
       JsonNode jsonMaNode = mapper.readTree(getParks("https://developer.nps.gov/api/v1/parks?stateCode=ma&api_key=" + API_KEY));
@@ -53,7 +49,7 @@ public class ParkSeeder implements CommandLineRunner {
       JsonNode jsonVtNode = mapper.readTree(getParks("https://developer.nps.gov/api/v1/parks?stateCode=vt&api_key=" + API_KEY));
       JsonNode parkVtData = jsonVtNode.get("data");
 
-      List<Park> listParks = new ArrayList();
+      listParks = new ArrayList();
       Set<Visitor> visitors = new HashSet<>();
       List<State> states = new ArrayList<>();
 
@@ -86,35 +82,24 @@ public class ParkSeeder implements CommandLineRunner {
         }
       }
 
-      for(JsonNode eachPark : parkMaData) {
-        Park parkMa = new Park();
-        parkMa.setDescription(eachPark.get("description").asText());
-        parkMa.setName(eachPark.get("fullName").asText());
-        parkMa.setState(state);
-        parkMa.setVisitors(visitors);
-        listParks.add(parkMa);
-      }
-
-      for(JsonNode eachPark : parkNhData) {
-        Park parkNh = new Park();
-        parkNh.setDescription(eachPark.get("description").asText());
-        parkNh.setName(eachPark.get("fullName").asText());
-        parkNh.setState(stateThree);
-        parkNh.setVisitors(visitors);
-        listParks.add(parkNh);
-      }
-
-      for(JsonNode eachPark : parkVtData) {
-        Park parkVt = new Park();
-        parkVt.setDescription(eachPark.get("description").asText());
-        parkVt.setName(eachPark.get("fullName").asText());
-        parkVt.setState(stateTwo);
-        parkVt.setVisitors(visitors);
-        listParks.add(parkVt);
-      }
+      addOrUpdatePark(parkMaData, visitors, state);
+      addOrUpdatePark(parkNhData, visitors, stateThree);
+      addOrUpdatePark(parkVtData, visitors, stateTwo);
 
       for (Park park : listParks) {
         parkRepo.save(park);
+      }
+  }
+
+  private void addOrUpdatePark(JsonNode data, Set<Visitor> visitors, State state) {
+    for(JsonNode fetchedPark : data) {
+      if (!fetchedPark.get("fullName").asText().equals("?????????") && !fetchedPark.get("fullName").asText().isEmpty()) {
+        Park park = parkRepo.findByName(fetchedPark.get("fullName").asText()).orElse(new Park());
+        park.setName(fetchedPark.get("fullName").asText());
+        park.setDescription(fetchedPark.get("description").asText());
+        park.setState(state);
+        park.setVisitors(visitors);
+        listParks.add(park);
       }
     }
   }
