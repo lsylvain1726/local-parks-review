@@ -70,8 +70,11 @@ public class ParkSeeder implements CommandLineRunner {
       JsonNode operatingHours = eachPark.get("operatingHours");
       for(JsonNode hours : operatingHours) {
         JsonNode exceptions = hours.get("exceptions");
+        park.setHoursDescription(hours.get("description").asText());
         for(JsonNode exception : exceptions) {
           park.setExceptionName(exception.get("name").asText());
+          park.setExceptionStartDate(exception.get("startDate").asText());
+          park.setExceptionEndDate(exception.get("endDate").asText());
         }
       }
 
@@ -84,6 +87,7 @@ public class ParkSeeder implements CommandLineRunner {
         i++;
       }
 
+      park.setDirectionsUrl(eachPark.get("directionsUrl").asText());
       park.setDescription(eachPark.get("description").asText());
       park.setName(eachPark.get("fullName").asText());
       park.setState(state);
