@@ -92,13 +92,14 @@ public class ParkSeeder implements CommandLineRunner {
     }
 
     for (Park park : listParks) {
-      parkRepo.save(park);
+      if (!park.getName().equals("?????????") && !park.getName().isEmpty()) {
+        parkRepo.save(park);
+      }
     }
   }
 
   @Override
   public void run(String... args) throws Exception {
-
     if(parkRepo.count() == 0) {
       seedParks("ma");
       seedParks("vt");
