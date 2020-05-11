@@ -24,6 +24,7 @@ public class ParkSeeder implements CommandLineRunner {
   private StateRepository stateRepo;
   private VisitorRepository visitorRepo;
   private final String API_KEY = "8cmiKECeVvQUZMKxdUPBtk2AggXY465FaxZIm2Ed";
+  private final String STATE_CODE = "ma";
 
   @Autowired
   public void setParkRepository(ParkRepository parkRepo, StateRepository stateRepo, VisitorRepository visitorRepo) {
@@ -37,85 +38,73 @@ public class ParkSeeder implements CommandLineRunner {
     String result = restTemplate.getForObject(uri, String.class);
     return result;
   }
+  public State seedStates(String state) {
+    State newState = new State();
+    newState.setName(state);
+    stateRepo.save(newState);
+    return newState;
+  }
 
-  @Override
-  public void run(String... args) throws Exception {
+  public void seedParks(String stateCode) throws Exception {
+    ObjectMapper mapper = new ObjectMapper();
+    JsonNode jsonNode = mapper.readTree(getParks("https://developer.nps.gov/api/v1/parks?stateCode="+ stateCode + "&api_key=" + API_KEY));
+    JsonNode parkData = jsonNode.get("data");
 
-    if(parkRepo.count() == 0) {
-      ObjectMapper mapper = new ObjectMapper();
+    List<Park> listParks = new ArrayList();
+    Set<Visitor> visitors = new HashSet<>();
+    List<Review> reviews = new ArrayList<>();
+    State state = new State();
 
-      JsonNode jsonMaNode = mapper.readTree(getParks("https://developer.nps.gov/api/v1/parks?stateCode=ma&api_key=" + API_KEY));
-      JsonNode parkMaData = jsonMaNode.get("data");
+    if(stateCode.equals("ma")) {
+      state = seedStates("Massachusetts");
+    } else if (stateCode.equals("vt")) {
+      state = seedStates("Vermont");
+    } else if (stateCode.equals("nh")) {
+      state = seedStates("New Hampshire");
+    }
 
-      JsonNode jsonNhNode = mapper.readTree(getParks("https://developer.nps.gov/api/v1/parks?stateCode=nh&api_key=" + API_KEY));
-      JsonNode parkNhData = jsonNhNode.get("data");
+    for(JsonNode eachPark : parkData) {
+      Park park = new Park();
 
-      JsonNode jsonVtNode = mapper.readTree(getParks("https://developer.nps.gov/api/v1/parks?stateCode=vt&api_key=" + API_KEY));
-      JsonNode parkVtData = jsonVtNode.get("data");
-
-      List<Park> listParks = new ArrayList();
-      Set<Visitor> visitors = new HashSet<>();
-      List<State> states = new ArrayList<>();
-
-      Visitor visitor = new Visitor();
-      visitor.setFirstName("Lauren");
-      visitor.setLastName("Sylvain");
-      visitors.add(visitor);
-
-      Visitor visitorTwo = new Visitor();
-      visitorTwo.setFirstName("Juvenal");
-      visitorTwo.setLastName("Miranda");
-      visitors.add(visitorTwo);
-
-
-      State state = new State();
-      state.setName("Massachusetts");
-      states.add(state);
-
-      State stateTwo = new State();
-      stateTwo.setName("Vermont");
-      states.add(stateTwo);
-
-      State stateThree = new State();
-      stateThree.setName("New Hampshire");
-      states.add(stateThree);
-
-      if(stateRepo.count() == 0) {
-        for(State eachState : states) {
-          stateRepo.save(eachState);
+      JsonNode operatingHours = eachPark.get("operatingHours");
+      for(JsonNode hours : operatingHours) {
+        JsonNode exceptions = hours.get("exceptions");
+        for(JsonNode exception : exceptions) {
+          park.setExceptionName(exception.get("name").asText());
         }
       }
 
-      for(JsonNode eachPark : parkMaData) {
-        Park parkMa = new Park();
-        parkMa.setDescription(eachPark.get("description").asText());
-        parkMa.setName(eachPark.get("fullName").asText());
-        parkMa.setState(state);
-        parkMa.setVisitors(visitors);
-        listParks.add(parkMa);
+      JsonNode images = eachPark.get("images");
+      int i = 0;
+      for(JsonNode image : images) {
+        if(i == 0) {
+          park.setImage(image.get("url").asText());
+        }
+        i++;
       }
 
-      for(JsonNode eachPark : parkNhData) {
-        Park parkNh = new Park();
-        parkNh.setDescription(eachPark.get("description").asText());
-        parkNh.setName(eachPark.get("fullName").asText());
-        parkNh.setState(stateThree);
-        parkNh.setVisitors(visitors);
-        listParks.add(parkNh);
-      }
+      park.setDescription(eachPark.get("description").asText());
+      park.setName(eachPark.get("fullName").asText());
+      park.setState(state);
+      park.setVisitors(visitors);
+      park.setReviews(reviews);
+      listParks.add(park);
+    }
 
-      for(JsonNode eachPark : parkVtData) {
-        Park parkVt = new Park();
-        parkVt.setDescription(eachPark.get("description").asText());
-        parkVt.setName(eachPark.get("fullName").asText());
-        parkVt.setState(stateTwo);
-        parkVt.setVisitors(visitors);
-        listParks.add(parkVt);
-      }
-
-      for (Park park : listParks) {
+    for (Park park : listParks) {
+      if (!park.getName().equals("?????????") && !park.getName().isEmpty()) {
         parkRepo.save(park);
       }
     }
   }
+
+  @Override
+  public void run(String... args) throws Exception {
+    if(parkRepo.count() == 0) {
+      seedParks("ma");
+      seedParks("vt");
+      seedParks("nh");
+    }
+  }
 }
+

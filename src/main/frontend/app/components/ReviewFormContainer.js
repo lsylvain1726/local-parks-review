@@ -1,9 +1,19 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Fragment} from 'react'
 import ErrorList from "./ErrorList"
 import _ from 'lodash'
-import ReviewUpdateTile from "./ReviewUpdateTile"
+import ReviewShow from './ReviewShow'
 
 const ReviewFormContainer = (props) => {
+
+    const defaultReview = {
+      comment: "",
+      rating: ""
+    }
+
+    const [reviewSubmitted, setReviewSubmitted] = useState(defaultReview)
+    const [errors, setErrors] = useState({})
+    const [loadData, setLoadData] = useState(true)
+
     const addReview = formPayload => {
       fetch(`/api/v1/review`, {
         method: "POST",
@@ -25,13 +35,40 @@ const ReviewFormContainer = (props) => {
       .catch(error => console.error(`Error in fetch: ${error.message}`))
     }
 
-    const defaultReview = {
-      comment: "",
-      rating: ""
-    }
+    const [listReviews, setListReviews] = useState([])
+    useEffect(() => {
+      fetch(`/api/v1/review`)
+        .then((response) => {
+          if (response.ok) {
+            return response
+          } else {
+            let errorMessage = `${response.status} (${response.statusText})`,
+              error = new Error(errorMessage)
+            throw error
+          }
+        })
+        .then((result) => {
+          return result.json()
+        })
+        .then((json) => {
+          setListReviews(json)
+          setLoadData(false)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }, [loadData])
 
-    const [reviewSubmitted, setReviewSubmitted] = useState(defaultReview)
-    const [errors, setErrors] = useState({})
+    const listReviewsByState = listReviews.map((review) => {
+      if(props.park.id === review.park.id) {
+        return(
+          <ReviewShow
+            key={review.id} 
+            review={review}
+          />
+        )
+      }
+    })
 
     const validForSubmission = () => {
       let submitErrors = {}
@@ -71,8 +108,10 @@ const ReviewFormContainer = (props) => {
       if (validForSubmission()) {
         addReview(formPayload)
         setReviewSubmitted(defaultReview)
+        setLoadData(true)
       }
     }
+
 
     const allRatings = ["1", "2", "3", "4", "5"]
     const ratingOptions = [""].concat(allRatings).map((option) => {
@@ -83,66 +122,8 @@ const ReviewFormContainer = (props) => {
     )
   })
 
-  const reviewListItems = reviewSubmitted.map(review=> {
-    return(
-      <ReviewUpdateTile
-        key={review.id}
-        visitor={review.visitor}
-        comment={review.comment}
-        rating={review.rating}
-      />
-    )
-  })
-
-  const deleteReview = (Review) => {
-    fetch(`api/v1/review/${id}`, {
-      credentials: 'same-origin',
-      method: 'DELETE',
-      body: JSON.stringify(Review),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then((response) => {
-    if (response.ok) {
-      return response
-      } else {
-        let errorMessage = `${response.status} (${response.statusText})`,
-        error = new Error(errorMessage)
-        throw (error)
-        }
-      })
-      .then(response => response.json())
-        .then(json => {
-          setLoading(false)
-          setReviewSubmitted([...reviewSubmitted,
-            json
-          ])
-        })
-  }
-
-  const editContractor = (reviewSubmitted) => {
-      fetch(`/api/v1/review/${id}`)
-      .then((resp) => {
-        if (resp.ok){
-          return resp
-        }else{
-          throw new Error(resp.Error)
-        }
-        }).then(resp => {
-          return resp.json();
-        }).then(body => {
-          setUpdatedContractor({...body})
-          setLoading(false)
-        })
-    }
-
-
   return(
-    <div>
-      <div>
-        {reviewListItems}
-      </div>
+    <Fragment>
       <div className="wrapper-review-form">
         <div className="row">
         <form onSubmit={handleReviewSubmit}>
@@ -163,7 +144,8 @@ const ReviewFormContainer = (props) => {
         </form>
         </div>
       </div>
-    </div>
+      {listReviewsByState}
+    </Fragment>
   )
 }
 
