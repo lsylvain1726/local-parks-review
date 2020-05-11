@@ -4,6 +4,16 @@ import _ from 'lodash'
 import ReviewShow from './ReviewShow'
 
 const ReviewFormContainer = (props) => {
+
+    const defaultReview = {
+      comment: "",
+      rating: ""
+    }
+
+    const [reviewSubmitted, setReviewSubmitted] = useState(defaultReview)
+    const [errors, setErrors] = useState({})
+    const [loadData, setLoadData] = useState(true)
+
     const addReview = formPayload => {
       fetch(`/api/v1/review`, {
         method: "POST",
@@ -23,11 +33,6 @@ const ReviewFormContainer = (props) => {
         response.json()
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`))
-    }
-
-    const defaultReview = {
-      comment: "",
-      rating: ""
     }
 
     const [listReviews, setListReviews] = useState([])
@@ -51,7 +56,10 @@ const ReviewFormContainer = (props) => {
         .catch((error) => {
           console.log(error)
         })
-    }, [])
+    }, [loadData])
+
+    console.log(loadData)
+    console.log(listReviews)
 
     const listReviewsByState = listReviews.map((review) => {
       if(props.park.id === review.park.id) {
@@ -63,9 +71,6 @@ const ReviewFormContainer = (props) => {
         )
       }
     })
-
-    const [reviewSubmitted, setReviewSubmitted] = useState(defaultReview)
-    const [errors, setErrors] = useState({})
 
     const validForSubmission = () => {
       let submitErrors = {}
@@ -105,8 +110,15 @@ const ReviewFormContainer = (props) => {
       if (validForSubmission()) {
         addReview(formPayload)
         setReviewSubmitted(defaultReview)
+
+        if(loadData) {
+          setLoadData(false)
+        } else {
+          setLoadData(true)
+        }
       }
     }
+
 
     const allRatings = ["1", "2", "3", "4", "5"]
     const ratingOptions = [""].concat(allRatings).map((option) => {
@@ -139,7 +151,6 @@ const ReviewFormContainer = (props) => {
         </form>
         </div>
       </div>
-      {reviewSubmitted.comment}
       {listReviewsByState}
     </Fragment>
   )

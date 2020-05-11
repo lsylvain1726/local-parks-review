@@ -1,0 +1,1 @@
+ALTER TABLE park ADD COLUMN image TEXT;
