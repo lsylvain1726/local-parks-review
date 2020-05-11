@@ -46,7 +46,7 @@ const ParksByStateContainer = props => {
         </div>
         <div className="wrapper-park-by-state">
           <div className="row">
-            {mapParks}
+              {mapParks}
           </div>
         </div>
       </Fragment>
