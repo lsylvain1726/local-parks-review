@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import ErrorList from "./ErrorList"
 import _ from 'lodash'
+import ReviewUpdateTile from "./ReviewUpdateTile"
 
 const ReviewFormContainer = (props) => {
     const addReview = formPayload => {
@@ -82,25 +83,85 @@ const ReviewFormContainer = (props) => {
     )
   })
 
+  const reviewListItems = reviewSubmitted.map(review=> {
+    return(
+      <ReviewUpdateTile
+        key={review.id}
+        visitor={review.visitor}
+        comment={review.comment}
+        rating={review.rating}
+      />
+    )
+  })
+
+  const deleteReview = (Review) => {
+    fetch(`api/v1/review/${id}`, {
+      credentials: 'same-origin',
+      method: 'DELETE',
+      body: JSON.stringify(Review),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => {
+    if (response.ok) {
+      return response
+      } else {
+        let errorMessage = `${response.status} (${response.statusText})`,
+        error = new Error(errorMessage)
+        throw (error)
+        }
+      })
+      .then(response => response.json())
+        .then(json => {
+          setLoading(false)
+          setReviewSubmitted([...reviewSubmitted,
+            json
+          ])
+        })
+  }
+
+  const editContractor = (reviewSubmitted) => {
+      fetch(`/api/v1/review/${id}`)
+      .then((resp) => {
+        if (resp.ok){
+          return resp
+        }else{
+          throw new Error(resp.Error)
+        }
+        }).then(resp => {
+          return resp.json();
+        }).then(body => {
+          setUpdatedContractor({...body})
+          setLoading(false)
+        })
+    }
+
+
   return(
-    <div className="wrapper-review-form">
-      <div className="row">
-      <form onSubmit={handleReviewSubmit}>
-        <ErrorList errors={errors} />
-        <div className="small-12 medium-6 columns">
-          <label htmlFor="comment">Comment</label>
-          <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={reviewSubmitted.comment}  />
-        </div>
-        <div className="small-12 medium-6 columns">
-            <label htmlFor="rating">Rating</label>
-            <select name="rating" id="rating" onChange={handleReviewChange} value={reviewSubmitted.rating} >
-                  {ratingOptions}
-            </select>
+    <div>
+      <div>
+        {reviewListItems}
+      </div>
+      <div className="wrapper-review-form">
+        <div className="row">
+        <form onSubmit={handleReviewSubmit}>
+          <ErrorList errors={errors} />
+          <div className="small-12 medium-6 columns">
+            <label htmlFor="comment">Comment</label>
+            <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={reviewSubmitted.comment}  />
           </div>
-        <div className="small-12 columns">
-          <input type="submit" className="button button-submit" value="Leave A Review!" />
+          <div className="small-12 medium-6 columns">
+              <label htmlFor="rating">Rating</label>
+              <select name="rating" id="rating" onChange={handleReviewChange} value={reviewSubmitted.rating} >
+                    {ratingOptions}
+              </select>
+            </div>
+          <div className="small-12 columns">
+            <input type="submit" className="button button-submit" value="Leave A Review!" />
+          </div>
+        </form>
         </div>
-      </form>
       </div>
     </div>
   )
