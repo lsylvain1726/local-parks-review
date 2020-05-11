@@ -52,14 +52,12 @@ const ReviewFormContainer = (props) => {
         })
         .then((json) => {
           setListReviews(json)
+          setLoadData(false)
         })
         .catch((error) => {
           console.log(error)
         })
     }, [loadData])
-
-    console.log(loadData)
-    console.log(listReviews)
 
     const listReviewsByState = listReviews.map((review) => {
       if(props.park.id === review.park.id) {
@@ -110,12 +108,7 @@ const ReviewFormContainer = (props) => {
       if (validForSubmission()) {
         addReview(formPayload)
         setReviewSubmitted(defaultReview)
-
-        if(loadData) {
-          setLoadData(false)
-        } else {
-          setLoadData(true)
-        }
+        setLoadData(true)
       }
     }
 
