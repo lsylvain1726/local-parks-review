@@ -1,8 +1,19 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Fragment} from 'react'
 import ErrorList from "./ErrorList"
 import _ from 'lodash'
+import ReviewShow from './ReviewShow'
 
 const ReviewFormContainer = (props) => {
+
+    const defaultReview = {
+      comment: "",
+      rating: ""
+    }
+
+    const [reviewSubmitted, setReviewSubmitted] = useState(defaultReview)
+    const [errors, setErrors] = useState({})
+    const [loadData, setLoadData] = useState(true)
+
     const addReview = formPayload => {
       fetch(`/api/v1/review`, {
         method: "POST",
@@ -24,13 +35,42 @@ const ReviewFormContainer = (props) => {
       .catch(error => console.error(`Error in fetch: ${error.message}`))
     }
 
-    const defaultReview = {
-      comment: "",
-      rating: ""
-    }
+    const [listReviews, setListReviews] = useState([])
+    useEffect(() => {
+      fetch(`/api/v1/review`)
+        .then((response) => {
+          if (response.ok) {
+            return response
+          } else {
+            let errorMessage = `${response.status} (${response.statusText})`,
+              error = new Error(errorMessage)
+            throw error
+          }
+        })
+        .then((result) => {
+          return result.json()
+        })
+        .then((json) => {
+          setListReviews(json)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }, [loadData])
 
-    const [reviewSubmitted, setReviewSubmitted] = useState(defaultReview)
-    const [errors, setErrors] = useState({})
+    console.log(loadData)
+    console.log(listReviews)
+
+    const listReviewsByState = listReviews.map((review) => {
+      if(props.park.id === review.park.id) {
+        return(
+          <ReviewShow
+            key={review.id} 
+            review={review}
+          />
+        )
+      }
+    })
 
     const validForSubmission = () => {
       let submitErrors = {}
@@ -70,8 +110,15 @@ const ReviewFormContainer = (props) => {
       if (validForSubmission()) {
         addReview(formPayload)
         setReviewSubmitted(defaultReview)
+
+        if(loadData) {
+          setLoadData(false)
+        } else {
+          setLoadData(true)
+        }
       }
     }
+
 
     const allRatings = ["1", "2", "3", "4", "5"]
     const ratingOptions = [""].concat(allRatings).map((option) => {
@@ -83,26 +130,29 @@ const ReviewFormContainer = (props) => {
   })
 
   return(
-    <div className="wrapper-review-form">
-      <div className="row">
-      <form onSubmit={handleReviewSubmit}>
-        <ErrorList errors={errors} />
-        <div className="small-12 medium-6 columns">
-          <label htmlFor="comment">Comment</label>
-          <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={reviewSubmitted.comment}  />
-        </div>
-        <div className="small-12 medium-6 columns">
-            <label htmlFor="rating">Rating</label>
-            <select name="rating" id="rating" onChange={handleReviewChange} value={reviewSubmitted.rating} >
-                  {ratingOptions}
-            </select>
+    <Fragment>
+      <div className="wrapper-review-form">
+        <div className="row">
+        <form onSubmit={handleReviewSubmit}>
+          <ErrorList errors={errors} />
+          <div className="small-12 medium-6 columns">
+            <label htmlFor="comment">Comment</label>
+            <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={reviewSubmitted.comment}  />
           </div>
-        <div className="small-12 columns">
-          <input type="submit" className="button button-submit" value="Leave A Review!" />
+          <div className="small-12 medium-6 columns">
+              <label htmlFor="rating">Rating</label>
+              <select name="rating" id="rating" onChange={handleReviewChange} value={reviewSubmitted.rating} >
+                    {ratingOptions}
+              </select>
+            </div>
+          <div className="small-12 columns">
+            <input type="submit" className="button button-submit" value="Leave A Review!" />
+          </div>
+        </form>
         </div>
-      </form>
       </div>
-    </div>
+      {listReviewsByState}
+    </Fragment>
   )
 }
 
