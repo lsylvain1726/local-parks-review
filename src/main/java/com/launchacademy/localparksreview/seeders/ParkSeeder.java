@@ -49,6 +49,7 @@ public class ParkSeeder implements CommandLineRunner {
     ObjectMapper mapper = new ObjectMapper();
     JsonNode jsonNode = mapper.readTree(getParks("https://developer.nps.gov/api/v1/parks?stateCode="+ stateCode + "&api_key=" + API_KEY));
     JsonNode parkData = jsonNode.get("data");
+    
 
     List<Park> listParks = new ArrayList();
     Set<Visitor> visitors = new HashSet<>();
