@@ -16,9 +16,12 @@ const ReviewShow = (props) => {
   return(
     <div>
       <p>
-      {review.comment}<br />
-      {review.rating}
+      {review.comment} {review.rating}
       </p>
+      <div>
+        <button onClick={props.editReview}>Edit</button>
+        <button onClick={props.deleteReview}>Delete</button>
+      </div>
     </div>
   )
 }

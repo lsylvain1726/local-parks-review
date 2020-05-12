@@ -92,7 +92,7 @@ const ReviewFormContainer = (props) => {
         .then((resp) => {
           if (resp.ok){
             return resp
-          }else{
+          } else{
             throw new Error(resp.Error)
           }
           }).then(resp => {
@@ -110,8 +110,7 @@ const ReviewFormContainer = (props) => {
             key={review.id} 
             review={review}
             deleteReview={deleteReview}
-
-
+            editReview={editReview}
           />
         )
       }
