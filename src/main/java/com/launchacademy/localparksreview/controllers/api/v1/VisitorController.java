@@ -11,9 +11,9 @@ public class VisitorController {
   @Autowired
   private VisitorRepository visitorRepo;
   @PostMapping
-  public Visitor newVisitor(@RequestBody Visitor visitor, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      throw new InvalidVisitorException();
+  public Visitor newVisitor(@RequestBody Visitor visitor) {
+    if (visitorRepo.findByEmail(visitor.getEmail()).isPresent()) {
+      return visitor;
     } else {
       return visitorRepo.save(visitor);
     }
