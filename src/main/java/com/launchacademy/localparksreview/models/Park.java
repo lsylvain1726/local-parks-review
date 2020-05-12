@@ -29,6 +29,18 @@ public class Park {
     @Column(name="exception_name")
     private String exceptionName;
 
+    @Column(name="exception_start_date")
+    private String exceptionStartDate;
+
+    @Column(name="exception_end_date")
+    private String exceptionEndDate;
+
+    @Column(name="directions_url")
+    private String directionsUrl;
+
+    @Column(name="hours_description")
+    private String hoursDescription;
+
     @Column
     private String image;
 
