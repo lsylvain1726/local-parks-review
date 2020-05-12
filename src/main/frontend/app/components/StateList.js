@@ -8,8 +8,9 @@ const StateList = (props) => {
       <div className="small-12 medium-4 columns" data-equalizer="foo">
         <div className="card-state"  data-equalizer-watch="foo"> 
           <div className="card-state-body">
+            <img src={`http://localhost:8080/image/${state.imagePath}`} alt={state.name}/>
             <h2><Link to={`/parks/${state.name}`}>{state.name}</Link></h2>
-            <img src="https://vacationidea.com/pix/img25Hy8R/articles/most-beautiful-mountains-of-vermont_t5.jpg" />
+            <p className="button"><Link to={`/parks/${state.name}`}>View Parks</Link></p>
           </div>
         </div>
       </div>  

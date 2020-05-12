@@ -38,9 +38,10 @@ public class ParkSeeder implements CommandLineRunner {
     String result = restTemplate.getForObject(uri, String.class);
     return result;
   }
-  public State seedStates(String state) {
+  public State seedStates(String state, String imagePath) {
     State newState = new State();
     newState.setName(state);
+    newState.setImagePath(imagePath);
     stateRepo.save(newState);
     return newState;
   }
@@ -57,11 +58,11 @@ public class ParkSeeder implements CommandLineRunner {
     State state = new State();
 
     if(stateCode.equals("ma")) {
-      state = seedStates("Massachusetts");
+      state = seedStates("Massachusetts", "massachusetts-1813239.jpg");
     } else if (stateCode.equals("vt")) {
-      state = seedStates("Vermont");
+      state = seedStates("Vermont", "vermont-1934567.jpg");
     } else if (stateCode.equals("nh")) {
-      state = seedStates("New Hampshire");
+      state = seedStates("New Hampshire", "nh-4019975.jpg");
     }
 
     for(JsonNode eachPark : parkData) {
