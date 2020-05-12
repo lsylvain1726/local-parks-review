@@ -6,26 +6,21 @@ const VisitorFormContainer = () => {
     email: "",
     password: "",
   };
-
   const [visitor, setVisitor] = useState(defaultFormValue);
   const [msg, setMsg] = useState("");
-
   const handleInputChange = (event) => {
     setVisitor({
       ...visitor,
       [event.currentTarget.id]: event.currentTarget.value,
     });
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     submitForm();
   };
-
   const clearForm = () => {
-      setVisitor(defaultFormValue)
-  }
-
+    setVisitor(defaultFormValue);
+  };
   const submitForm = () => {
     fetch("/api/v1/visitors", {
       method: "POST",
@@ -34,8 +29,7 @@ const VisitorFormContainer = () => {
     })
       .then((response) => {
         if (response.ok) {
-          console.log(response.json().data);
-          clearForm()
+          return response.json();
         } else {
           throw new Error(`${response.status} (${response.statusText})`);
         }
@@ -55,7 +49,6 @@ const VisitorFormContainer = () => {
       })
       .catch((error) => console.error(`Error in fetch: ${error.message}`));
   };
-  
   return (
     <div>
       <form onSubmit={handleSubmit}>
