@@ -17,7 +17,7 @@ const ReviewShow = (props) => {
 
   const handleDeleteClick = (event) => {
     event.preventDefault()
-    props.deleteContractor(props.id)
+    props.deleteReview(props.id)
   }
 
   return(
@@ -32,6 +32,7 @@ const ReviewShow = (props) => {
       </div>
         <EditReviewForm
           key={review.id}
+          id={props.id}
           edit={updateReview}
           review={props.review}
         />

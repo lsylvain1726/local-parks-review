@@ -85,14 +85,13 @@ const ParkReviewContainer = (props) => {
 
 }
 
-
-
   const reviewListItems = listReviews.map(review => {
     if(props.park.id === review.park.id) {
       return(
       <div>
         <ReviewShow
-          key={review.id} 
+          key={review.id}
+          id={review.id}
           review={review}
           deleteReview={deleteReview}
         />

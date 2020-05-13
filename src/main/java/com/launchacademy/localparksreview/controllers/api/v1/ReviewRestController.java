@@ -26,7 +26,7 @@ public class ReviewRestController {
   private ReviewRepository reviewRepo;
 
   @Autowired
-  public void setAdoptionApplicationRepoRepo(ReviewRepository reviewRepo) {
+  public void setReviewRepo(ReviewRepository reviewRepo) {
     this.reviewRepo = reviewRepo;
   }
 
@@ -56,7 +56,7 @@ public class ReviewRestController {
   }
 
   @GetMapping ("/{id}")
-  public Optional<Review> singleReview(Review review, @PathVariable Integer id){
+  public Review singleReview(Review review, @PathVariable Integer id){
     return reviewRepo.findById(id);
   }
 

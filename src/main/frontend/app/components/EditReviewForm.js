@@ -7,12 +7,16 @@ const EditReviewForm = (props) => {
     const [review, setReview] = useState(props.review)
     const [errors, setErrors] = useState({})
 
+    const defaultReview = {
+      comment: "",
+      rating: ""
+    }
 
     const validForSubmission = () => {
       let submitErrors = {}
       const requiredFields = ["comment", "rating"]
       requiredFields.forEach((field) => {
-        if (review[field].trim() === "") {
+        if (review[field] === "") {
           submitErrors = {
             ...submitErrors,
             [field]: "is blank"
@@ -38,9 +42,10 @@ const EditReviewForm = (props) => {
       let ratingNumber = parseInt(review.rating)
 
       let formPayload = {
+        id: props.id,
         comment: review.comment,
         rating: ratingNumber,
-        park: props.park,
+        park: props.park
       }
 
       if (validForSubmission()) {
@@ -54,8 +59,7 @@ const EditReviewForm = (props) => {
             }).then(resp => {
               return resp.json();
             }).then(body => {
-              setUpdatedContractor({...body})
-              setLoading(false)
+              setReview({...body})
             })
         setReview(defaultReview)
       }
@@ -77,7 +81,7 @@ const EditReviewForm = (props) => {
          <Fragment>
             <div className="wrapper-review-form">
               <div className="row">
-              <form>
+              <form onSubmit={handleReviewSubmit}>
                 <ErrorList errors={errors} />
                 <div className="small-12 medium-6 columns">
                   <label htmlFor="comment">Comment</label>
