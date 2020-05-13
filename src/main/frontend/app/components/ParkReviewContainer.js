@@ -56,12 +56,58 @@ const ParkReviewContainer = (props) => {
   }
   useEffect(loadReviews, [])
 
+  const deleteReview = (reviewSubmitted) => {
+    fetch(`api/v1/review/${id}`, {
+        credentials: 'same-origin',
+        method: 'DELETE',
+        body: JSON.stringify(contractor),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => {
+        if (response.ok) {
+          return response
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage)
+          throw (error)
+        }
+      })
+      .then(response => response.json())
+      .then(json => {
+        setLoading(false)
+        setContractors([...contractors,
+          json
+        ])
+      })
+
+}
+
+const editReview = (listReviews) => {
+    fetch(`/api/v1/review/${listReviews}`)
+    .then((resp) => {
+      if (resp.ok){
+        return resp
+      } else{
+        throw new Error(resp.Error)
+      }
+      }).then(resp => {
+        return resp.json();
+      }).then(body => {
+        setUpdatedContractor({...body})
+        setLoading(false)
+      })
+  }
+
   const reviewListItems = listReviews.map(review => {
     if(props.park.id === review.park.id) {
       return(
         <ReviewShow
           key={review.id} 
           review={review}
+          deleteReview={deleteReview}
+          editReview={editReview}
         />
       )
     }
