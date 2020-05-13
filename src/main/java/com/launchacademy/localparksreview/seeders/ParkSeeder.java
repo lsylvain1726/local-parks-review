@@ -38,9 +38,10 @@ public class ParkSeeder implements CommandLineRunner {
     String result = restTemplate.getForObject(uri, String.class);
     return result;
   }
-  public State seedStates(String state) {
+  public State seedStates(String state, String imagePath) {
     State newState = new State();
     newState.setName(state);
+    newState.setImagePath(imagePath);
     stateRepo.save(newState);
     return newState;
   }
@@ -49,6 +50,7 @@ public class ParkSeeder implements CommandLineRunner {
     ObjectMapper mapper = new ObjectMapper();
     JsonNode jsonNode = mapper.readTree(getParks("https://developer.nps.gov/api/v1/parks?stateCode="+ stateCode + "&api_key=" + API_KEY));
     JsonNode parkData = jsonNode.get("data");
+    
 
     List<Park> listParks = new ArrayList();
     Set<Visitor> visitors = new HashSet<>();
@@ -56,11 +58,11 @@ public class ParkSeeder implements CommandLineRunner {
     State state = new State();
 
     if(stateCode.equals("ma")) {
-      state = seedStates("Massachusetts");
+      state = seedStates("Massachusetts", "massachusetts-1813239.jpg");
     } else if (stateCode.equals("vt")) {
-      state = seedStates("Vermont");
+      state = seedStates("Vermont", "vermont-1934567.jpg");
     } else if (stateCode.equals("nh")) {
-      state = seedStates("New Hampshire");
+      state = seedStates("New Hampshire", "nh-4019975.jpg");
     }
 
     for(JsonNode eachPark : parkData) {
@@ -69,8 +71,11 @@ public class ParkSeeder implements CommandLineRunner {
       JsonNode operatingHours = eachPark.get("operatingHours");
       for(JsonNode hours : operatingHours) {
         JsonNode exceptions = hours.get("exceptions");
+        park.setHoursDescription(hours.get("description").asText());
         for(JsonNode exception : exceptions) {
           park.setExceptionName(exception.get("name").asText());
+          park.setExceptionStartDate(exception.get("startDate").asText());
+          park.setExceptionEndDate(exception.get("endDate").asText());
         }
       }
 
@@ -83,6 +88,7 @@ public class ParkSeeder implements CommandLineRunner {
         i++;
       }
 
+      park.setDirectionsUrl(eachPark.get("directionsUrl").asText());
       park.setDescription(eachPark.get("description").asText());
       park.setName(eachPark.get("fullName").asText());
       park.setState(state);
@@ -92,13 +98,14 @@ public class ParkSeeder implements CommandLineRunner {
     }
 
     for (Park park : listParks) {
-      parkRepo.save(park);
+      if (!park.getName().equals("?????????") && !park.getName().isEmpty()) {
+        parkRepo.save(park);
+      }
     }
   }
 
   @Override
   public void run(String... args) throws Exception {
-
     if(parkRepo.count() == 0) {
       seedParks("ma");
       seedParks("vt");

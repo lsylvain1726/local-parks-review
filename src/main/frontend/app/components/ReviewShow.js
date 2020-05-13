@@ -16,8 +16,12 @@ const ReviewShow = (props) => {
   return(
     <div>
       <p>
+<<<<<<< HEAD
         {review.comment}<br />
         {review.rating}
+=======
+      {review.comment} {review.rating}
+>>>>>>> dcb9679c1c21c130850b330551a49fcf19559d00
       </p>
       <div>
         <button onClick={props.editReview}>Edit</button>

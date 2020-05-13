@@ -6,8 +6,6 @@ const ParksByStateContainer = props => {
 
     let state = props.match.params.state;
 
-    let stateNoSpace = state.replace(/\s+/g, '')
-
     useEffect(() => {
         fetch(`/api/v1/parks/${state}`)
             .then(response => {
@@ -27,10 +25,23 @@ const ParksByStateContainer = props => {
     }, [state])
 
     const mapParks = parks.map(park => {
+
+        let parkStatus = ""
+        let parkStatusClass = ""
+        if(park.exceptionName != null) {
+          parkStatus = park.exceptionName
+          parkStatusClass = "closed"
+        } else {
+          parkStatus = "Open"
+          parkStatusClass = "open"
+        }
+
         return (
             <ParksByStateTile
                 key={park.id}
                 park={park}
+                parkStatus={parkStatus}
+                parkStatusClass={parkStatusClass}
             />
         )
     });
@@ -45,8 +56,8 @@ const ParksByStateContainer = props => {
           </div>
         </div>
         <div className="wrapper-park-by-state">
-          <div className="row">
-            {mapParks}
+          <div className="row" data-equalizer="about">
+              {mapParks}
           </div>
         </div>
       </Fragment>
