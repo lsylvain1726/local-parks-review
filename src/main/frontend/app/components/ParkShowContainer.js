@@ -29,6 +29,13 @@ const ParkShowContainer = (props) => {
       })
   }, {})
 
+  let parkStatus = ""
+  if(park.exceptionName != null) {
+    parkStatus = park.exceptionName
+  } else {
+    parkStatus = "Open"
+  }
+
   return (
     <Fragment>
       <div className={`wrapper-interior-header wrapper-interior-park`}>
@@ -38,8 +45,12 @@ const ParkShowContainer = (props) => {
           </div>
         </div>
       </div>
-      <div className="wrapper-individual-pet">
-        <ParkShow key={park.id} data={park}/>
+      <div className="wrapper-individual-park">
+        <ParkShow 
+          key={park.id} 
+          data={park}
+          parkStatus={parkStatus}
+        />
         <ReviewFormContainer 
           park={park}
         />
