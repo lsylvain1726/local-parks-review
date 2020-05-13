@@ -180,7 +180,7 @@
   position: relative;
   z-index: -1;
   min-height: 220px;
-  background: #eee url(http://localhost:8080/image/tree.jpg) no-repeat 95% 100%;
+  background: #eee url(https://local-parks.s3.us-east-2.amazonaws.com/tree.jpg) no-repeat 95% 100%;
 }
 
 .park-header-title {
