@@ -18,7 +18,7 @@ const NavBar = () => {
           <div className="row">
             <div className="small-12 columns">
               <div className="top-bar-left">
-                <Link to="/"><img src="#" alt="Park Review Logo"/></Link>
+                <Link to="/"><img src="https://local-parks.s3.us-east-2.amazonaws.com/ga-logo.jpg" alt="Park Review Logo"/></Link>
               </div>
               <div className="top-bar-right" id="responsive-menu">
               <ul className="dropdown menu" data-dropdown-menu>

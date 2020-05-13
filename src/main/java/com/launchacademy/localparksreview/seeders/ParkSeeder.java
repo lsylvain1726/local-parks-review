@@ -58,11 +58,11 @@ public class ParkSeeder implements CommandLineRunner {
     State state = new State();
 
     if(stateCode.equals("ma")) {
-      state = seedStates("Massachusetts", "massachusetts-1813239.jpg");
+      state = seedStates("Massachusetts", "https://local-parks.s3.us-east-2.amazonaws.com/massachusetts-1813239.jpg");
     } else if (stateCode.equals("vt")) {
-      state = seedStates("Vermont", "vermont-1934567.jpg");
+      state = seedStates("Vermont", "https://local-parks.s3.us-east-2.amazonaws.com/vermont-1934567.jpg");
     } else if (stateCode.equals("nh")) {
-      state = seedStates("New Hampshire", "nh-4019975.jpg");
+      state = seedStates("New Hampshire", "https://local-parks.s3.us-east-2.amazonaws.com/nh-4019975.jpg");
     }
 
     for(JsonNode eachPark : parkData) {
