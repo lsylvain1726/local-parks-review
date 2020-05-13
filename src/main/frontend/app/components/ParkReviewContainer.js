@@ -2,6 +2,7 @@ import React, {useState, useEffect, Fragment} from "react"
 import ReviewFormContainer from "./ReviewFormContainer"
 import ReviewShow from "./ReviewShow"
 
+
 const ParkReviewContainer = (props) => {
 
   const [listReviews, setListReviews] = useState([])
@@ -84,31 +85,18 @@ const ParkReviewContainer = (props) => {
 
 }
 
-const editReview = (listReviews) => {
-    fetch(`/api/v1/review/${listReviews}`)
-    .then((resp) => {
-      if (resp.ok){
-        return resp
-      } else{
-        throw new Error(resp.Error)
-      }
-      }).then(resp => {
-        return resp.json();
-      }).then(body => {
-        setUpdatedContractor({...body})
-        setLoading(false)
-      })
-  }
+
 
   const reviewListItems = listReviews.map(review => {
     if(props.park.id === review.park.id) {
       return(
+      <div>
         <ReviewShow
           key={review.id} 
           review={review}
           deleteReview={deleteReview}
-          editReview={editReview}
         />
+      </div>
       )
     }
   })
