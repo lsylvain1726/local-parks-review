@@ -26,7 +26,7 @@ public class ReviewRestController {
   private ReviewRepository reviewRepo;
 
   @Autowired
-  public void setAdoptionApplicationRepoRepo(ReviewRepository reviewRepo) {
+  public void setReviewRepo(ReviewRepository reviewRepo) {
     this.reviewRepo = reviewRepo;
   }
 
@@ -55,17 +55,21 @@ public class ReviewRestController {
     }
   }
 
-  @GetMapping ("/{id}")
-  public Optional<Review> singleReview(Review review, @PathVariable Integer id){
-    return reviewRepo.findById(id);
+  @GetMapping (path="{id}")
+  public Optional<Review> singleReview(@PathVariable Integer id){
+    Optional<Review> review = reviewRepo.findById(id);
+    return review;
   }
 
-  @PutMapping ("/{id}")
+  @PutMapping ("{id}")
   public Review updateReview(@RequestBody Review newReview, @PathVariable Integer id){
+    System.out.println(newReview);
     return reviewRepo.findById(id)
         .map(Review -> {
           Review.setComment(newReview.getComment());
           Review.setRating(newReview.getRating());
+          Review.setPark(newReview.getPark());
+          Review.setId(id);
           return reviewRepo.save(Review);
         }).orElseThrow(() -> new InvalidReviewException());
   }

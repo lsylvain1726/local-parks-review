@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.stereotype.Component;
 
@@ -27,16 +28,17 @@ public class Review {
   @Id
   @SequenceGenerator(name = "review_generator", sequenceName = "review_id_seq", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "review_generator")
-  @Column(name = "id", nullable = false, unique = true)    Integer id;
+  @Column(name = "id", nullable = false, unique = true)
+  private Integer id;
 
   @ManyToOne
   @JoinColumn(name = "park_id")
   @JsonIgnoreProperties("reviews")
-  Park park;
+  private Park park;
 
-  @ManyToOne
+  @ManyToOne(optional = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "visitor_id", nullable = true)
-  Visitor visitor;
+  private Visitor visitor;
 
   @NotBlank
   private String comment;

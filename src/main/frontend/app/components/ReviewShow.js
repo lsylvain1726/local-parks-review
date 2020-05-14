@@ -1,16 +1,23 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
+import EditReviewForm from "./EditReviewForm"
 
 const ReviewShow = (props) => {
+  const [updateReview, setUpdateReview] = useState(false)
   const review = props.review
 
   const handleEditClick = (event) => {
+    setUpdateReview(true)
     event.preventDefault()
-    props.editContractor(props.id)
+  }
+
+  const addReview = (formPayLoad) => {
+    event.preventDefault()
+    props.editReview(formPayLoad)
   }
 
   const handleDeleteClick = (event) => {
     event.preventDefault()
-    props.deleteContractor(props.id)
+    props.deleteReview(props.id)
   }
 
   return(
@@ -30,6 +37,12 @@ const ReviewShow = (props) => {
           <button onClick={props.deleteReview}>Delete</button>
         </div>
       </div>
+        <EditReviewForm
+          key={review.id}
+          id={props.id}
+          edit={updateReview}
+          review={props.review}
+        />
     </div>
   )
 }
