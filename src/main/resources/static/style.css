@@ -1,12 +1,57 @@
+/* General */
+
+a {
+  color: #379683;
+}
+
+a:hover,
+a:focus {
+  color: #05386B;
+}
+
 /* Button */
 
 .button {
   background-color:#05386B;
+  color: #fff;
 }
 
 .button:hover,
 .button:focus {
-  background-color: #5CDB95;
+  background-color: #379683;
+}
+
+.button-home {
+  background-color:#379683;
+}
+
+.button-home:hover,
+.button-home:focus {
+  background-color: #05386B;
+}
+
+/* Navigation */
+
+.dropdown.menu>li.is-dropdown-submenu-parent>a:after {
+  border-color: #05386B transparent transparent;
+}
+
+.menu.vertical>li {
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.is-dropdown-submenu {
+  border: transparent;
+  border-top: 2px solid #379683;
+}
+
+.is-dropdown-submenu a{
+  font-size: 1rem;
+}
+
+.top-bar-right .menu .is-dropdown-submenu a:hover{
+  background-color: #379683;
+  color: #fff;
 }
 
 /* TopBar */
@@ -131,7 +176,7 @@
 
 .hero-caption h2 {
   font-size: 2rem;
-  color: #5CDB95;
+  color: #fff;
 }
 
 .hero-caption p {
@@ -153,17 +198,67 @@
 
 /* Home State Section */
 
+.wrapper-state {
+  padding: 3.25rem;
+  text-align: center;
+}
+
+.wrapper-state-title {
+  margin-bottom: 0;
+  padding-bottom: .625rem;
+  color: #379683;
+}
+
+.wrapper-state-header {
+  margin-bottom: 1.5rem
+}
+
+.wrapper-state-header span {
+  display: inline-block;
+  position: relative;
+}
+
+.wrapper-state-header span:before,
+.wrapper-state-header span:after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  border-bottom: 1px solid #05386B;
+  top: 20px;
+  width: 400px;
+}
+
+.wrapper-state-header span:before {
+  right: 60px;
+}
+
+.wrapper-state-header span:after {
+    left: 60px;
+}
+
 .card-state-body {
   box-shadow: 0 1px 5px 0 rgba(0,0,0,.3);
   text-align: center;
 }
 
-.card-state-body h2 {
-  color: #379683;
-  text-align: center;
+
+.card-state-title a{
+  color: #05386B;
+  font-size: 2rem;
+}
+
+/* Large and up */
+@media screen and (min-width: 64em) {
+  .wrapper-animal-title {
+    margin-bottom: 3rem;
+  }
 }
 
 /* All Parks */
+
+.wrapper-parks {
+  padding: 3.75rem;
+}
 
 .card-all-parks-title {
   font-size: 1.25rem;
@@ -221,6 +316,12 @@
   font-weight: 700;
 }
 
+.list-directions:after{
+  font-family: fontAwesome;
+  content: '\f0da';
+  margin-left: .625rem;
+}
+
 .park-info-title {
   font-weight: 700;
   color: #242582;
@@ -244,6 +345,10 @@
   background-color: #05386B;
   color: #fff;
   padding: 2rem;
+}
+
+.card-park-info-left img {
+  margin-bottom: 1.5rem;
 }
 
 /* Park Page Cards */
@@ -304,6 +409,137 @@
 
 .card-park-header .open {
   background-color: #379683;
+}
+
+/* Card Review */
+
+.card-review {
+  background: #fff;
+  border: 1px solid #dfe0e3;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+  padding: .75rem 1.5rem;
+}
+
+.card-header {
+  margin-bottom: .75rem;
+}
+
+.card-review .stars-outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+  letter-spacing: 5px;
+}
+
+.card-review .stars-outer:before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #d3d3d3;
+}
+
+.card-review .stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+.card-review .stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
+
+.card-review .stars-inner-1 {
+  width: 20%;
+}
+
+.card-review .stars-inner-2 {
+  width: 40%;
+}
+
+.card-review .stars-inner-3 {
+  width: 60%;
+}
+
+.card-review .stars-inner-4 {
+  width: 80%;
+}
+.card-review .stars-inner-5 {
+  width: 100%;
+}
+
+.review-header-title {
+  font-size: 1.5rem;
+  color: #379683;
+}
+
+/* Review Slider */
+
+.wrapper-slider {
+  width: 100%;
+  padding: 60px 52px 288px;
+  background: url(https://local-parks.s3.us-east-2.amazonaws.com/landscape-3521372.jpg) no-repeat top center;
+  background-size: cover;
+}
+
+.item-slider {
+  background-color: rgba(5,56,107,.7);
+  color: #fff;
+  padding: 1.875rem;
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+.review-slider {
+  position: relative;
+  top: 140px;
+}
+
+/* Dots */
+.slick-dotted.slick-slider
+{
+    margin-bottom: 30px;
+}
+
+.slick-dots {
+    bottom: 0;
+}
+
+.slick-dots li {
+
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    padding: 0;
+}
+
+.slick-dots li button {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+}
+
+.slick-dots li button:hover:before,
+.slick-dots li button:focus:before {
+    opacity: 1;
+}
+.slick-dots li button:before {
+    font-size: 18px;
+    line-height: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    opacity: .75;
+    color: #379683;
+}
+
+.slick-dots li.slick-active button:before {
+    opacity: .75;
+    color: #379683;
 }
 
 /* Footer */

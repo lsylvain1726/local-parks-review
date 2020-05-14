@@ -85,7 +85,26 @@ const ParkReviewContainer = (props) => {
 
 }
 
-  const reviewListItems = listReviews.map(review => {
+const editReview = (listReviews) => {
+    fetch(`/api/v1/review/${listReviews}`)
+    .then((resp) => {
+      if (resp.ok){
+        return resp
+      } else{
+        throw new Error(resp.Error)
+      }
+      }).then(resp => {
+        return resp.json();
+      }).then(body => {
+        setUpdatedContractor({...body})
+        setLoading(false)
+      })
+  }
+
+  const reviewListItems = listReviews.map((review) => {
+
+    let starClass = review.rating
+
     if(props.park.id === review.park.id) {
       return(
       <div>
@@ -93,6 +112,7 @@ const ParkReviewContainer = (props) => {
           key={review.id}
           id={review.id}
           review={review}
+          starClass={starClass}
           deleteReview={deleteReview}
         />
       </div>
@@ -106,6 +126,8 @@ const ParkReviewContainer = (props) => {
         addReview={addReview}
         park={props.park}  
       />
+      <hr />
+      <h2 className="review-header-title">What People Say About {props.park.name}</h2>
       {reviewListItems}
     </Fragment>
   )
