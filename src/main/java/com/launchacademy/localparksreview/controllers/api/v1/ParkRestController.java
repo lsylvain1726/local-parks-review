@@ -5,6 +5,7 @@ import com.launchacademy.localparksreview.models.Park;
 import com.launchacademy.localparksreview.models.State;
 import com.launchacademy.localparksreview.repositories.ParkRepository;
 import com.launchacademy.localparksreview.repositories.StateRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,5 +47,15 @@ public class ParkRestController {
             throw new UrlNotFoundException();
         }
         return park;
+    }
+
+    @GetMapping("/searchBar")
+    public List<String> getParksForSearchBar(){
+        List<String> searchBarList = new ArrayList<>();
+        Iterable <Park> parks = parkRepo.findAll();
+        for(Park park: parks){
+            searchBarList.add(park.getName());
+        }
+        return searchBarList;
     }
 }
