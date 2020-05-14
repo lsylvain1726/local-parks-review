@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import StateList from "./StateList"
 import HeroHeader from "./HeroHeader"
+import SearchContainer from "./SearchContainer"
 
 
 const StateContainer = (props) => {
@@ -37,10 +38,14 @@ const StateContainer = (props) => {
         <div className="wrapper-state">
           <div className="row">
             <div className="small-12 columns">
-              <h2 className="wrapper-state-title">Choose A State</h2>
+              <div className="wrapper-state-header">
+                <h2 className="wrapper-state-title">Choose A State</h2>
+                <span><img src="https://local-parks.s3.us-east-2.amazonaws.com/tree-icon.png" alt="Logo Icon" /></span>
+              </div>
             </div>
               {listOfStates}
           </div>
+          <SearchContainer />
         </div>
       </Fragment>
     );

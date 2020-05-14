@@ -9,72 +9,15 @@ const ReviewFormContainer = (props) => {
       comment: "",
       rating: ""
     }
-
-    const [reviewSubmitted, setReviewSubmitted] = useState(defaultReview)
+    const [review, setReview] = useState(defaultReview)
     const [errors, setErrors] = useState({})
-    const [loadData, setLoadData] = useState(true)
 
-    const addReview = formPayload => {
-      fetch(`/api/v1/review`, {
-        method: "POST",
-        body: JSON.stringify(formPayload),
-        headers: { "Content-Type": "application/json" }
-      })
-      .then(response => {
-        if (response.ok) {
-          return response
-        } else {
-          let errorMessage = `${response.status} (${response.statusText})`,
-            error = new Error(errorMessage)
-          throw error
-        }
-      })
-      .then(response => {
-        response.json()
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`))
-    }
-
-    const [listReviews, setListReviews] = useState([])
-    useEffect(() => {
-      fetch(`/api/v1/review`)
-        .then((response) => {
-          if (response.ok) {
-            return response
-          } else {
-            let errorMessage = `${response.status} (${response.statusText})`,
-              error = new Error(errorMessage)
-            throw error
-          }
-        })
-        .then((result) => {
-          return result.json()
-        })
-        .then((json) => {
-          setListReviews(json)
-          setLoadData(false)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }, [loadData])
-
-    const listReviewsByState = listReviews.map((review) => {
-      if(props.park.id === review.park.id) {
-        return(
-          <ReviewShow
-            key={review.id} 
-            review={review}
-          />
-        )
-      }
-    })
 
     const validForSubmission = () => {
       let submitErrors = {}
       const requiredFields = ["comment", "rating"]
       requiredFields.forEach((field) => {
-        if (reviewSubmitted[field].trim() === "") {
+        if (review[field].trim() === "") {
           submitErrors = {
             ...submitErrors,
             [field]: "is blank"
@@ -88,8 +31,8 @@ const ReviewFormContainer = (props) => {
 
     const handleReviewChange = event => {
       event.preventDefault()
-      setReviewSubmitted({
-        ...reviewSubmitted,
+      setReview({
+        ...review,
         [event.currentTarget.id]: event.currentTarget.value
       })
     }
@@ -97,18 +40,17 @@ const ReviewFormContainer = (props) => {
     const handleReviewSubmit = event => {
       event.preventDefault()
 
-      let ratingNumber = parseInt(reviewSubmitted.rating)
+      let ratingNumber = parseInt(review.rating)
 
       let formPayload = {
-        comment: reviewSubmitted.comment,
+        comment: review.comment,
         rating: ratingNumber,
         park: props.park,
       }
 
       if (validForSubmission()) {
-        addReview(formPayload)
-        setReviewSubmitted(defaultReview)
-        setLoadData(true)
+        props.addReview(formPayload)
+        setReview(defaultReview)
       }
     }
 
@@ -130,11 +72,11 @@ const ReviewFormContainer = (props) => {
           <ErrorList errors={errors} />
           <div className="small-12 medium-6 columns">
             <label htmlFor="comment">Comment</label>
-            <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={reviewSubmitted.comment}  />
+            <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={review.comment}  />
           </div>
           <div className="small-12 medium-6 columns">
               <label htmlFor="rating">Rating</label>
-              <select name="rating" id="rating" onChange={handleReviewChange} value={reviewSubmitted.rating} >
+              <select name="rating" id="rating" onChange={handleReviewChange} value={review.rating} >
                     {ratingOptions}
               </select>
             </div>
@@ -144,7 +86,6 @@ const ReviewFormContainer = (props) => {
         </form>
         </div>
       </div>
-      {listReviewsByState}
     </Fragment>
   )
 }

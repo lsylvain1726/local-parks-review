@@ -24,8 +24,9 @@
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
-    "react": "~16.8.0",
-    "react-dom": "~16.8.0",
-    "react-router-dom": "^5.0.0"
+    "react": "~16.12.0",
+    "react-dom": "~16.12.0",
+    "react-router-dom": "^5.0.0",
+    "react-equal-height": "1.1.1"
   }
 }

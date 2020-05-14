@@ -1,12 +1,13 @@
 /* Button */
 
 .button {
-  background-color:#05386B;
+  background-color:#379683;
+  color: #fff;
 }
 
 .button:hover,
 .button:focus {
-  background-color: #5CDB95;
+  background-color: #05386B
 }
 
 /* TopBar */
@@ -29,12 +30,16 @@
   background-color: #fff;
 }
 
+.top-bar-left {
+  margin-top: 1rem;
+}
+
 .top-bar-left img {
   max-height: 90px;
 }
 
 .top-bar-right {
-  margin-top: 2.6rem;
+  margin-top: 2.125rem;
   padding-right: 3.75rem;
 }
 
@@ -127,7 +132,7 @@
 
 .hero-caption h2 {
   font-size: 2rem;
-  color: #5CDB95;
+  color: #fff;
 }
 
 .hero-caption p {
@@ -147,10 +152,77 @@
   }
 }
 
+/* Home State Section */
+
+.wrapper-state {
+  padding: 3.25rem;
+  text-align: center;
+}
+
+.wrapper-state-title {
+  margin-bottom: 0;
+  padding-bottom: .625rem;
+  color: #379683;
+}
+
+.wrapper-state-header {
+  margin-bottom: 1.5rem
+}
+
+.wrapper-state-header span {
+  display: inline-block;
+  position: relative;
+}
+
+.wrapper-state-header span:before,
+.wrapper-state-header span:after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  border-bottom: 1px solid #05386B;
+  top: 20px;
+  width: 400px;
+}
+
+.wrapper-state-header span:before {
+  right: 60px;
+}
+
+.wrapper-state-header span:after {
+    left: 60px;
+}
+
+.card-state-body {
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,.3);
+  text-align: center;
+}
+
+
+.card-state-title a{
+  color: #05386B;
+  font-size: 2rem;
+}
+
+/* Large and up */
+@media screen and (min-width: 64em) {
+  .wrapper-animal-title {
+    margin-bottom: 3rem;
+  }
+}
+
 /* All Parks */
+
+.wrapper-parks {
+  padding: 3.75rem;
+}
 
 .card-all-parks-title {
   font-size: 1.25rem;
+}
+
+.card-park-body img {
+  max-height: 180px;
+  width: 100%;
 }
 
 /* Individual Parks Page */
@@ -158,13 +230,13 @@
 .wrapper-interior-header {
   position: relative;
   z-index: -1;
-  min-height: 100px;
-  background-color: #eee;
+  min-height: 220px;
+  background: #eee url(https://local-parks.s3.us-east-2.amazonaws.com/tree.jpg) no-repeat 95% 100%;
 }
 
 .park-header-title {
   position: absolute;
-  color: #2f2fa2;
+  color: #fff;
   top: 50%;
   transform: translateY(-50%);
   text-transform: capitalize;
@@ -185,8 +257,19 @@
   margin: 0;
 }
 
+.list-park-info li {
+  margin-right: .625rem;
+  border-bottom: 1px solid #eee;
+  padding: .5rem 1.5rem;
+}
+
 .list-park-info img{
   margin-bottom: 1rem;
+}
+
+.list-title {
+  color: #05386B;
+  font-weight: 700;
 }
 
 .park-info-title {
@@ -202,31 +285,46 @@
   width: 30%;
 }
 
-/* Pet Type Page Cards */
+.card-park-info-right {
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,.3);
+  background-color: #fff;
+  border: 1px solid #eee;
+}
+
+.card-park-info-title {
+  background-color: #05386B;
+  color: #fff;
+  padding: 2rem;
+}
+
+.card-park-info-left img {
+  margin-bottom: 1.5rem;
+}
+
+/* Park Page Cards */
 
 .wrapper-park-by-state {
   padding: 3.75rem 0;
-}
-
-
-.list-park-info {
-  list-style: none;
-  margin: 0;
-}
-
-.list-park-info li {
-  margin-right: .625rem
 }
 
 .card-park {
   box-shadow: 0 1px 5px 0 rgba(0,0,0,.3);
   text-align: center;
   margin-bottom: 2rem;
+  background-color: #fff;
 }
 
 .card-park-header img{
-  max-height: 215px;
+  max-height: 180px;
   width: 100%;
+}
+
+.card-park-title {
+  font-size: 1.375rem;
+}
+
+.card-park-title a {
+  color: #05386B;
 }
 
 .card-park-body {
@@ -242,6 +340,89 @@
   font-family: fontAwesome;
   content: '\f0da';
   margin-left: .625rem;
+}
+
+.card-park-header {
+  position: relative;
+  color: #fff;
+}
+
+.status-title {
+  position:absolute;
+  top:0;
+  padding: .625rem;
+}
+
+.card-park-header .closed {
+  background-color: #FF0000;
+}
+
+.card-park-header .open {
+  background-color: #379683;
+}
+
+/* Card Review */
+
+.card-review {
+  background: #fff;
+  border: 1px solid #dfe0e3;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+  padding: .75rem 1.5rem;
+}
+
+.card-header {
+  margin-bottom: .75rem;
+}
+
+.card-review .stars-outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+  letter-spacing: 5px;
+}
+
+.card-review .stars-outer:before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #d3d3d3;
+}
+
+.card-review .stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+.card-review .stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
+
+.card-review .stars-inner-1 {
+  width: 20%;
+}
+
+.card-review .stars-inner-2 {
+  width: 40%;
+}
+
+.card-review .stars-inner-3 {
+  width: 60%;
+}
+
+.card-review .stars-inner-4 {
+  width: 80%;
+}
+.card-review .stars-inner-5 {
+  width: 100%;
+}
+
+.review-header-title {
+  font-size: 1.5rem;
+  color: #379683;
 }
 
 /* Footer */
