@@ -22,7 +22,7 @@ const VisitorFormContainer = () => {
     setVisitor(defaultFormValue);
   };
   const submitForm = () => {
-    fetch("/api/v1/visitors", {
+    fetch("/api/v1/visitors/signup", {
       method: "POST",
       body: JSON.stringify(visitor),
       headers: { "Content-Type": "application/json" },
