@@ -45,11 +45,10 @@ const EditReviewForm = (props) => {
         id: props.id,
         comment: review.comment,
         rating: review.rating,
-//        park: props.review.park.id
+        park: props.review.park.id
       }
 
       if (validForSubmission()) {
-      debugger
          fetch(`/api/v1/review/${formPayload.id}`, {
           method: "PUT",
           body: JSON.stringify(formPayload),

@@ -68,7 +68,7 @@ public class ReviewRestController {
         .map(Review -> {
           Review.setComment(newReview.getComment());
           Review.setRating(newReview.getRating());
-//          Review.setPark(newReview.getPark());
+          Review.setPark(newReview.getPark());
           Review.setId(id);
           return reviewRepo.save(Review);
         }).orElseThrow(() -> new InvalidReviewException());
