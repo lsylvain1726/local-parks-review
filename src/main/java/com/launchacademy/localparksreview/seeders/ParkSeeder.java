@@ -20,16 +20,18 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class ParkSeeder implements CommandLineRunner {
-  @Autowired
   private ParkRepository parkRepo;
-
-  @Autowired
   private StateRepository stateRepo;
-
-  @Autowired
   private VisitorRepository visitorRepo;
   private final String API_KEY = "8cmiKECeVvQUZMKxdUPBtk2AggXY465FaxZIm2Ed";
   private final String STATE_CODE = "ma";
+
+  @Autowired
+  public void setParkRepository(ParkRepository parkRepo, StateRepository stateRepo, VisitorRepository visitorRepo) {
+    this.parkRepo = parkRepo;
+    this.stateRepo = stateRepo;
+    this.visitorRepo = visitorRepo;
+  }
 
   public String getParks(String uri) {
     RestTemplate restTemplate = new RestTemplate();
@@ -50,9 +52,9 @@ public class ParkSeeder implements CommandLineRunner {
     JsonNode parkData = jsonNode.get("data");
     
 
-    List<Park> listParks = new ArrayList<Park>();
-    Set<Visitor> visitors = new HashSet<Visitor>();
-    List<Review> reviews = new ArrayList<Review>();
+    List<Park> listParks = new ArrayList();
+    Set<Visitor> visitors = new HashSet<>();
+    List<Review> reviews = new ArrayList<>();
     State state = new State();
 
     if(stateCode.equals("ma")) {
