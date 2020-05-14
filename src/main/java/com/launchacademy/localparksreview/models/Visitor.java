@@ -2,8 +2,8 @@ package com.launchacademy.localparksreview.models;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import lombok.Data;
-import org.hibernate.validator.constraints.URL;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -11,7 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "visitor")
 public class Visitor {
@@ -37,8 +38,17 @@ public class Visitor {
     @Column(name = "password")
     private String password;
 
+    @ManyToMany
+    @JoinTable(name = "review",
+            joinColumns = @JoinColumn(name = "visitor_id"),
+            inverseJoinColumns = @JoinColumn(name = "park_id"))
+    Set<Park> parkReviews = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "review", joinColumns = @JoinColumn(name = "visitor_id"), inverseJoinColumns = @JoinColumn(name = "park_id"))
-    Set<Park> parkReviews = new HashSet<>();
+    @JoinTable(name="visitor_roles",
+            joinColumns= @JoinColumn(name="visitor_id"),
+            inverseJoinColumns= @JoinColumn(name="role_id")
+    )
+    Set<Role> roles;
+
 }
