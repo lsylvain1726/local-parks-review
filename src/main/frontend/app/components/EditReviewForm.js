@@ -44,13 +44,18 @@ const EditReviewForm = (props) => {
       let formPayload = {
         id: props.id,
         comment: review.comment,
-        rating: ratingNumber,
-        park: props.park
+        rating: review.rating,
+//        park: props.review.park.id
       }
 
       if (validForSubmission()) {
-         fetch(`/api/v1/review/${formPayload.id}`)
-          .then((resp) => {
+      debugger
+         fetch(`/api/v1/review/${formPayload.id}`, {
+          method: "PUT",
+          body: JSON.stringify(formPayload),
+          headers: { "Content-Type": "application/json" }
+        })
+        .then((resp) => {
             if (resp.ok){
               return resp
             } else{
@@ -59,6 +64,7 @@ const EditReviewForm = (props) => {
             }).then(resp => {
               return resp.json();
             }).then(body => {
+            debugger
               setReview({...body})
             })
         setReview(defaultReview)
