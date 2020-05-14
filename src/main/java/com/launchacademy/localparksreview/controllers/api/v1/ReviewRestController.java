@@ -57,9 +57,7 @@ public class ReviewRestController {
 
   @GetMapping (path="{id}")
   public Optional<Review> singleReview(@PathVariable Integer id){
-    System.out.println(id);
     Optional<Review> review = reviewRepo.findById(id);
-    System.out.println(review);
     return review;
   }
 
