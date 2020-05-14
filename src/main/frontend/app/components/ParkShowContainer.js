@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Fragment } from "react"
 import ParkShow from "./ParkShow"
 import ReviewFormContainer from "./ReviewFormContainer"
+import ReviewShow from "./ReviewShow"
+import ParkReviewContainer from "./ParkReviewContainer"
 
 const ParkShowContainer = (props) => {
   const { state, id } = props.match.params
@@ -28,6 +30,13 @@ const ParkShowContainer = (props) => {
       })
   }, {})
 
+  let parkStatus = ""
+  if(park.exceptionName != null) {
+    parkStatus = park.exceptionName
+  } else {
+    parkStatus = "Open"
+  }
+
   return (
     <Fragment>
       <div className={`wrapper-interior-header wrapper-interior-park`}>
@@ -39,7 +48,7 @@ const ParkShowContainer = (props) => {
       </div>
       <div className="wrapper-individual-pet">
         <ParkShow key={park.id} data={park}/>
-        <ReviewFormContainer 
+        <ParkReviewContainer 
           park={park}
         />
       </div>

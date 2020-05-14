@@ -1,5 +1,7 @@
 package com.launchacademy.localparksreview.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -24,10 +26,32 @@ public class Park {
     @Column
     private String description;
 
+    @Column(name="exception_name")
+    private String exceptionName;
+
+    @Column(name="exception_start_date")
+    private String exceptionStartDate;
+
+    @Column(name="exception_end_date")
+    private String exceptionEndDate;
+
+    @Column(name="directions_url")
+    private String directionsUrl;
+
+    @Column(name="hours_description")
+    private String hoursDescription;
+
+    @Column
+    private String image;
+
     @ManyToOne
     @JoinColumn(name="location_id", nullable = false)
     private State state;
 
     @ManyToMany(mappedBy = "parkReviews")
     Set<Visitor> visitors = new HashSet<>();
+
+    @OneToMany(mappedBy = "park", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("park")
+    private List<Review> reviews;
 }

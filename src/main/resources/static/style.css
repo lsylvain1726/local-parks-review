@@ -29,12 +29,16 @@
   background-color: #fff;
 }
 
+.top-bar-left {
+  margin-top: 1rem;
+}
+
 .top-bar-left img {
   max-height: 90px;
 }
 
 .top-bar-right {
-  margin-top: 2.6rem;
+  margin-top: 2.125rem;
   padding-right: 3.75rem;
 }
 
@@ -147,10 +151,27 @@
   }
 }
 
+/* Home State Section */
+
+.card-state-body {
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,.3);
+  text-align: center;
+}
+
+.card-state-body h2 {
+  color: #379683;
+  text-align: center;
+}
+
 /* All Parks */
 
 .card-all-parks-title {
   font-size: 1.25rem;
+}
+
+.card-park-body img {
+  max-height: 180px;
+  width: 100%;
 }
 
 /* Individual Parks Page */
@@ -158,13 +179,13 @@
 .wrapper-interior-header {
   position: relative;
   z-index: -1;
-  min-height: 100px;
-  background-color: #eee;
+  min-height: 220px;
+  background: #eee url(https://local-parks.s3.us-east-2.amazonaws.com/tree.jpg) no-repeat 95% 100%;
 }
 
 .park-header-title {
   position: absolute;
-  color: #2f2fa2;
+  color: #fff;
   top: 50%;
   transform: translateY(-50%);
   text-transform: capitalize;
@@ -185,8 +206,19 @@
   margin: 0;
 }
 
+.list-park-info li {
+  margin-right: .625rem;
+  border-bottom: 1px solid #eee;
+  padding: .5rem 1.5rem;
+}
+
 .list-park-info img{
   margin-bottom: 1rem;
+}
+
+.list-title {
+  color: #05386B;
+  font-weight: 700;
 }
 
 .park-info-title {
@@ -202,31 +234,42 @@
   width: 30%;
 }
 
-/* Pet Type Page Cards */
+.card-park-info-right {
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,.3);
+  background-color: #fff;
+  border: 1px solid #eee;
+}
+
+.card-park-info-title {
+  background-color: #05386B;
+  color: #fff;
+  padding: 2rem;
+}
+
+/* Park Page Cards */
 
 .wrapper-park-by-state {
   padding: 3.75rem 0;
-}
-
-
-.list-park-info {
-  list-style: none;
-  margin: 0;
-}
-
-.list-park-info li {
-  margin-right: .625rem
 }
 
 .card-park {
   box-shadow: 0 1px 5px 0 rgba(0,0,0,.3);
   text-align: center;
   margin-bottom: 2rem;
+  background-color: #fff;
 }
 
 .card-park-header img{
-  max-height: 215px;
+  max-height: 180px;
   width: 100%;
+}
+
+.card-park-title {
+  font-size: 1.375rem;
+}
+
+.card-park-title a {
+  color: #05386B;
 }
 
 .card-park-body {
@@ -242,6 +285,25 @@
   font-family: fontAwesome;
   content: '\f0da';
   margin-left: .625rem;
+}
+
+.card-park-header {
+  position: relative;
+  color: #fff;
+}
+
+.status-title {
+  position:absolute;
+  top:0;
+  padding: .625rem;
+}
+
+.card-park-header .closed {
+  background-color: #FF0000;
+}
+
+.card-park-header .open {
+  background-color: #379683;
 }
 
 /* Footer */

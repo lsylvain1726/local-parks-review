@@ -10,5 +10,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface ParkRepository extends PagingAndSortingRepository<Park, Integer> {
 
   List<Park> findAllByState(State state);
-  Optional<Park> findByName(String fullName);
+  Optional<Park> findByName(String name);
 }

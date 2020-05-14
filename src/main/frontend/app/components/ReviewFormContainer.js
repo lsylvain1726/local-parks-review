@@ -1,42 +1,23 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Fragment} from 'react'
 import ErrorList from "./ErrorList"
 import _ from 'lodash'
+import ReviewShow from './ReviewShow'
 
 const ReviewFormContainer = (props) => {
-    const addReview = formPayload => {
-      fetch(`/api/v1/review`, {
-        method: "POST",
-        body: JSON.stringify(formPayload),
-        headers: { "Content-Type": "application/json" }
-      })
-      .then(response => {
-        if (response.ok) {
-          return response
-        } else {
-          let errorMessage = `${response.status} (${response.statusText})`,
-            error = new Error(errorMessage)
-          throw error
-        }
-      })
-      .then(response => {
-        response.json()
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`))
-    }
 
     const defaultReview = {
       comment: "",
       rating: ""
     }
-
-    const [reviewSubmitted, setReviewSubmitted] = useState(defaultReview)
+    const [review, setReview] = useState(defaultReview)
     const [errors, setErrors] = useState({})
+
 
     const validForSubmission = () => {
       let submitErrors = {}
       const requiredFields = ["comment", "rating"]
       requiredFields.forEach((field) => {
-        if (reviewSubmitted[field].trim() === "") {
+        if (review[field].trim() === "") {
           submitErrors = {
             ...submitErrors,
             [field]: "is blank"
@@ -50,8 +31,8 @@ const ReviewFormContainer = (props) => {
 
     const handleReviewChange = event => {
       event.preventDefault()
-      setReviewSubmitted({
-        ...reviewSubmitted,
+      setReview({
+        ...review,
         [event.currentTarget.id]: event.currentTarget.value
       })
     }
@@ -59,19 +40,20 @@ const ReviewFormContainer = (props) => {
     const handleReviewSubmit = event => {
       event.preventDefault()
 
-      let ratingNumber = parseInt(reviewSubmitted.rating)
+      let ratingNumber = parseInt(review.rating)
 
       let formPayload = {
-        comment: reviewSubmitted.comment,
+        comment: review.comment,
         rating: ratingNumber,
         park: props.park,
       }
 
       if (validForSubmission()) {
-        addReview(formPayload)
-        setReviewSubmitted(defaultReview)
+        props.addReview(formPayload)
+        setReview(defaultReview)
       }
     }
+
 
     const allRatings = ["1", "2", "3", "4", "5"]
     const ratingOptions = [""].concat(allRatings).map((option) => {
@@ -83,26 +65,28 @@ const ReviewFormContainer = (props) => {
   })
 
   return(
-    <div className="wrapper-review-form">
-      <div className="row">
-      <form onSubmit={handleReviewSubmit}>
-        <ErrorList errors={errors} />
-        <div className="small-12 medium-6 columns">
-          <label htmlFor="comment">Comment</label>
-          <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={reviewSubmitted.comment}  />
-        </div>
-        <div className="small-12 medium-6 columns">
-            <label htmlFor="rating">Rating</label>
-            <select name="rating" id="rating" onChange={handleReviewChange} value={reviewSubmitted.rating} >
-                  {ratingOptions}
-            </select>
+    <Fragment>
+      <div className="wrapper-review-form">
+        <div className="row">
+        <form onSubmit={handleReviewSubmit}>
+          <ErrorList errors={errors} />
+          <div className="small-12 medium-6 columns">
+            <label htmlFor="comment">Comment</label>
+            <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={review.comment}  />
           </div>
-        <div className="small-12 columns">
-          <input type="submit" className="button button-submit" value="Leave A Review!" />
+          <div className="small-12 medium-6 columns">
+              <label htmlFor="rating">Rating</label>
+              <select name="rating" id="rating" onChange={handleReviewChange} value={review.rating} >
+                    {ratingOptions}
+              </select>
+            </div>
+          <div className="small-12 columns">
+            <input type="submit" className="button button-submit" value="Leave A Review!" />
+          </div>
+        </form>
         </div>
-      </form>
       </div>
-    </div>
+    </Fragment>
   )
 }
 
