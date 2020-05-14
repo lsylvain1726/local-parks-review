@@ -1,7 +1,7 @@
 import React, {useState, useEffect, Fragment} from 'react'
 import ErrorList from "./ErrorList"
 import _ from 'lodash'
-import ReviewShow from './ReviewShow'
+
 
 const ReviewFormContainer = (props) => {
 
@@ -70,11 +70,11 @@ const ReviewFormContainer = (props) => {
         <div className="row">
         <form onSubmit={handleReviewSubmit}>
           <ErrorList errors={errors} />
-          <div className="small-12 medium-6 columns">
+          <div className="small-12 columns">
             <label htmlFor="comment">Comment</label>
-            <input type="text" name="comment" id="comment" onChange={handleReviewChange} value={review.comment}  />
+            <textarea name="comment" id="comment" onChange={handleReviewChange} value={review.comment}  cols="40" rows="5"></textarea>
           </div>
-          <div className="small-12 medium-6 columns">
+          <div className="small-12 columns">
               <label htmlFor="rating">Rating</label>
               <select name="rating" id="rating" onChange={handleReviewChange} value={review.rating} >
                     {ratingOptions}
