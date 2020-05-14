@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import StateList from "./StateList"
 import HeroHeader from "./HeroHeader"
+import SearchContainer from "./SearchContainer"
 
 
 const StateContainer = (props) => {
@@ -44,6 +45,7 @@ const StateContainer = (props) => {
             </div>
               {listOfStates}
           </div>
+          <SearchContainer />
         </div>
       </Fragment>
     );
