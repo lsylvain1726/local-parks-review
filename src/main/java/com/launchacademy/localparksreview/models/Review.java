@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 @Data
 @Entity
 @Table(name = "review")
-@ToString
 public class Review {
   @Id
   @SequenceGenerator(name = "review_generator", sequenceName = "review_id_seq", allocationSize = 1)
@@ -37,7 +36,7 @@ public class Review {
   @JsonIgnoreProperties("reviews")
   private Park park;
 
-  @ManyToOne
+  @ManyToOne(optional = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "visitor_id", nullable = true)
   private Visitor visitor;
 
