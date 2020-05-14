@@ -11,5 +11,3 @@ public interface VisitorRepository extends CrudRepository<Visitor, Integer> {
 
  Optional<Visitor> findByEmail(String email);
 }
-
-
