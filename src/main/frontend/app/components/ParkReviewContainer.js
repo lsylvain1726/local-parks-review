@@ -100,12 +100,16 @@ const editReview = (listReviews) => {
       })
   }
 
-  const reviewListItems = listReviews.map(review => {
+  const reviewListItems = listReviews.map((review) => {
+
+    let starClass = review.rating
+
     if(props.park.id === review.park.id) {
       return(
         <ReviewShow
           key={review.id} 
           review={review}
+          starClass={starClass}
           deleteReview={deleteReview}
           editReview={editReview}
         />
@@ -119,6 +123,8 @@ const editReview = (listReviews) => {
         addReview={addReview}
         park={props.park}  
       />
+      <hr />
+      <h2 className="review-header-title">What People Say About {props.park.name}</h2>
       {reviewListItems}
     </Fragment>
   )

@@ -14,14 +14,21 @@ const ReviewShow = (props) => {
   }
 
   return(
-    <div>
-      <p>
-        {review.comment}<br />
-        {review.rating}
-      </p>
-      <div>
-        <button onClick={props.editReview}>Edit</button>
-        <button onClick={props.deleteReview}>Delete</button>
+    <div className="card-review">
+      <div className="card-review-header">
+        <div className="stars-outer">
+          <div className={`stars-inner stars-inner-${props.starClass}`}>
+          </div>
+        </div>
+      </div>
+      <div className="card-review-body">
+        <p>
+          {review.comment}
+        </p>
+        <div>
+          <button onClick={props.editReview}>Edit</button>
+          <button onClick={props.deleteReview}>Delete</button>
+        </div>
       </div>
     </div>
   )

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import ParksByStateTile from "./ParksByStateTile";
+import { EqualHeight } from 'react-equal-height';
 
 const ParksByStateContainer = props => {
     const [parks, setParks] = useState([]);
@@ -24,7 +25,8 @@ const ParksByStateContainer = props => {
             .catch(error => console.error(`Error in fetch: ${error.message}`))
     }, [state])
 
-    const mapParks = parks.map(park => {
+    const lastIndex = parks.length - 1
+    const mapParks = parks.map((park, i) => {
 
         let parkStatus = ""
         let parkStatusClass = ""
@@ -36,10 +38,18 @@ const ParksByStateContainer = props => {
           parkStatusClass = "open"
         }
 
+        let lastColumn = ""
+        if (i === lastIndex) {
+          lastColumn = "end"
+        } else {
+          lastColumn = "next"
+        }
+
         return (
             <ParksByStateTile
                 key={park.id}
                 park={park}
+                lastColumn={lastColumn}
                 parkStatus={parkStatus}
                 parkStatusClass={parkStatusClass}
             />
@@ -56,8 +66,10 @@ const ParksByStateContainer = props => {
           </div>
         </div>
         <div className="wrapper-park-by-state">
-          <div className="row" data-equalizer="about">
+          <div className="row">
+            <EqualHeight>
               {mapParks}
+            </EqualHeight>
           </div>
         </div>
       </Fragment>

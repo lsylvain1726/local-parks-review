@@ -1,5 +1,6 @@
 import React, { useEffect , useState, Fragment} from "react";
 import ParkList from "../components/ParkList";
+import { EqualHeight } from 'react-equal-height';
 
 const ParkContainer = (props) => {
   const [parks, setParks] = useState([]);
@@ -39,7 +40,9 @@ const ParkContainer = (props) => {
         </div>
         <div className="wrapper-parks">
           <div className="row">
-            {listOfParks}
+            <EqualHeight>
+              {listOfParks}
+            </EqualHeight>
           </div>
         </div>
     </Fragment>

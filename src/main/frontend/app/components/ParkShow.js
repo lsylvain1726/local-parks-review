@@ -1,5 +1,5 @@
 import React from "react"
-import ReviewFormContainer from "./ReviewFormContainer"
+import ParkReviewContainer from "./ParkReviewContainer"
 
 const ParkShow = (props) => {
   const { name, description, state, image, directionsUrl, hoursDescription, exceptionEndDate} = props.data
@@ -11,6 +11,9 @@ const ParkShow = (props) => {
             <img src={image} alt={name}/>
             <p>{description}</p>
           </div>
+          <ParkReviewContainer 
+            park={props.data}
+          />
         </div>
         <div className="columns small-4">
           <div className="card-park-info-right">
