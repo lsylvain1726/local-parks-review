@@ -1,13 +1,57 @@
+/* General */
+
+a {
+  color: #379683;
+}
+
+a:hover,
+a:focus {
+  color: #05386B;
+}
+
 /* Button */
 
 .button {
-  background-color:#379683;
+  background-color:#05386B;
   color: #fff;
 }
 
 .button:hover,
 .button:focus {
-  background-color: #05386B
+  background-color: #379683;
+}
+
+.button-home {
+  background-color:#379683;
+}
+
+.button-home:hover,
+.button-home:focus {
+  background-color: #05386B;
+}
+
+/* Navigation */
+
+.dropdown.menu>li.is-dropdown-submenu-parent>a:after {
+  border-color: #05386B transparent transparent;
+}
+
+.menu.vertical>li {
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.is-dropdown-submenu {
+  border: transparent;
+  border-top: 2px solid #379683;
+}
+
+.is-dropdown-submenu a{
+  font-size: 1rem;
+}
+
+.top-bar-right .menu .is-dropdown-submenu a:hover{
+  background-color: #379683;
+  color: #fff;
 }
 
 /* TopBar */
@@ -270,6 +314,12 @@
 .list-title {
   color: #05386B;
   font-weight: 700;
+}
+
+.list-directions:after{
+  font-family: fontAwesome;
+  content: '\f0da';
+  margin-left: .625rem;
 }
 
 .park-info-title {

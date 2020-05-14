@@ -3,7 +3,7 @@ import ParkShow from "./ParkShow"
 
 const ParkShowContainer = (props) => {
   const { state, id } = props.match.params
-  const [park, setPark] = useState({})
+  const [park, setPark] = useState([])
 
   useEffect(() => {
     fetch(`/api/v1/parks/${state}/${id}`)
@@ -25,13 +25,20 @@ const ParkShowContainer = (props) => {
       .catch((error) => {
         console.log(error)
       })
-  }, {})
+  }, [])
 
   let parkStatus = ""
   if(park.exceptionName != null) {
     parkStatus = park.exceptionName
   } else {
     parkStatus = "Open"
+  }
+
+  let exceptionDateHide = ""
+  if(park.exceptionEndDate != null) {
+    exceptionDateHide = "show"
+  } else {
+    exceptionDateHide = "hide"
   }
 
   return (
@@ -44,7 +51,12 @@ const ParkShowContainer = (props) => {
         </div>
       </div>
       <div className="wrapper-individual-park">
-        <ParkShow key={park.id} data={park}/>
+        <ParkShow 
+          key={park.id} 
+          data={park}
+          parkStatus={parkStatus}
+          exceptionDateHide={exceptionDateHide}
+        />
       </div>
     </Fragment>
   )

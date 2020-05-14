@@ -10,7 +10,7 @@ const StateList = (props) => {
           <div className="card-state-body">
             <img src={state.imagePath} alt={state.name}/>
             <h2 className="card-state-title"><Link to={`/parks/${state.name}`}>{state.name}</Link></h2>
-            <Link to={`/parks/${state.name}`} className="button">View Parks</Link>
+            <Link to={`/parks/${state.name}`} className="button button-home">View Parks</Link>
           </div>
         </div>
       </div>  
