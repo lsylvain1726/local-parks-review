@@ -61,22 +61,22 @@ public class ReviewRestController {
     return review;
   }
 
-  @PutMapping ("{id}")
+  @PutMapping ("/edit/{id}")
   public Review updateReview(@RequestBody Review newReview, @PathVariable Integer id){
-    System.out.println(newReview);
     return reviewRepo.findById(id)
-        .map(Review -> {
-          Review.setComment(newReview.getComment());
-          Review.setRating(newReview.getRating());
-          Review.setPark(newReview.getPark());
-          Review.setId(id);
-          return reviewRepo.save(Review);
+        .map(review -> {
+          review.setComment(newReview.getComment());
+          review.setRating(newReview.getRating());
+          review.setPark(newReview.getPark());
+          review.setId(newReview.getId());
+          return reviewRepo.save(review);
         }).orElseThrow(() -> new InvalidReviewException());
   }
 
-  @DeleteMapping ("/{id}")
-  public Iterable<Review> deleteReview(@PathVariable Integer id){
-    reviewRepo.deleteById(id);
-    return reviewRepo.findAll();
-  }
+//  @DeleteMapping ("/delete/{id}")
+//  public Iterable<Review> deleteReview(@PathVariable Integer id){
+//    Optional<Review> review = reviewRepo.findById(id);
+//    reviewRepo.deleteById(id);
+//    return reviewRepo.findAll();
+//  }
 }

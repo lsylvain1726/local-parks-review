@@ -3,10 +3,11 @@ import EditReviewForm from "./EditReviewForm"
 
 const ReviewShow = (props) => {
   const [updateReview, setUpdateReview] = useState(false)
+  const [reviewUpdated, setReviewUpdated] = useState(false)
   const review = props.review
 
   const handleEditClick = (event) => {
-    setUpdateReview(true)
+    setUpdateReview(!updateReview)
     event.preventDefault()
   }
 
@@ -18,6 +19,12 @@ const ReviewShow = (props) => {
   const handleDeleteClick = (event) => {
     event.preventDefault()
     props.deleteReview(props.id)
+  }
+
+  const newReview2 = () =>{
+    setReviewUpdated(!reviewUpdated)
+    props.loadReviews()
+    setUpdateReview(false)
   }
 
   return(
@@ -33,8 +40,8 @@ const ReviewShow = (props) => {
           {review.comment}
         </p>
         <div>
-          <button onClick={props.editReview}>Edit</button>
-          <button onClick={props.deleteReview}>Delete</button>
+          <button onClick={handleEditClick}>Edit</button>
+          <button onClick={handleDeleteClick}>Delete</button>
         </div>
       </div>
         <EditReviewForm
@@ -42,6 +49,7 @@ const ReviewShow = (props) => {
           id={props.id}
           edit={updateReview}
           review={props.review}
+          newReview2={newReview2}
         />
     </div>
   )

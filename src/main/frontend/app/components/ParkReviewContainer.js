@@ -8,6 +8,8 @@ const ParkReviewContainer = (props) => {
   const [visitor, setVisitor] = useState(null);
   const [review, setReviewForm] = useState(null);
 
+  const [listReviews, setListReviews] = useState([])
+  const [reviewUpdated, setReviewUpdated] = useState(false)
   useEffect(() => {
     fetch("/api/v1/visitors/isLoggedIn", {
       method: "POST",
@@ -82,14 +84,13 @@ const ParkReviewContainer = (props) => {
   useEffect(loadReviews, []);
 
   const deleteReview = (reviewSubmitted) => {
-    fetch(`api/v1/review/${id}`, {
-      credentials: "same-origin",
-      method: "DELETE",
-      body: JSON.stringify(contractor),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+  debugger
+    fetch(`api/v1/review/delete/${reviewSubmitted}`, {
+        credentials: 'same-origin',
+        method: 'DELETE',
+        body: JSON.stringify(listReviews),
+        headers: {'Content-Type': 'application/json'}
+      })
       .then((response) => {
         if (response.ok) {
           return response;
@@ -99,24 +100,33 @@ const ParkReviewContainer = (props) => {
           throw error;
         }
       })
-      .then((response) => response.json())
-      .then((json) => {
-        setLoading(false);
-        setContractors([...contractors, json]);
-      });
-  };
-
-  const editReview = (listReviews) => {
-    fetch(`/api/v1/review/${listReviews}`)
-      .then((resp) => {
-        if (resp.ok) {
-          return resp;
-        } else {
-          throw new Error(resp.Error);
-        }
+      .then(response => response.json())
+      .then(json => {
+        setLoading(false)
+        setListReviews([...listReviews,
+          json
+        ])
       })
-      .then((resp) => {
+
+}
+
+const editReview = (listReviews) => {
+    fetch(`/api/v1/review/edit/${listReviews.id}`, {
+      method: "PUT",
+      body: JSON.stringify(listReviews),
+      headers: { "Content-Type": "application/json" }
+    })
+    .then((resp) => {
+      if (resp.ok){
+        return resp
+      } else{
+        throw new Error(resp.Error)
+      }
+      }).then(resp => {
         return resp.json();
+      }).then(body => {
+        setListReviews({...body})
+        setLoading(false)
       })
       .then((body) => {
         setUpdatedContractor({ ...body });
@@ -124,21 +134,29 @@ const ParkReviewContainer = (props) => {
       });
   };
 
+  const newReview = () =>{
+    setReviewUpdated(!reviewUpdated)
+  }
+
   const reviewListItems = listReviews.map((review) => {
     let starClass = review.rating;
 
-    if (props.park.id === review.park.id) {
-      return (
-        <div>
-          <ReviewShow
-            key={review.id}
-            id={review.id}
-            review={review}
-            starClass={starClass}
-            deleteReview={deleteReview}
-          />
-        </div>
-      );
+    let starClass = review.rating
+
+    if(props.park.id === review.park.id) {
+      return(
+      <div>
+        <ReviewShow
+          key={review.id}
+          id={review.id}
+          review={review}
+          starClass={starClass}
+          deleteReview={deleteReview}
+          newReview={newReview}
+          loadReviews={loadReviews}
+        />
+      </div>
+      )
     }
   });
 

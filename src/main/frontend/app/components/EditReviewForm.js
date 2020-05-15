@@ -44,12 +44,13 @@ const EditReviewForm = (props) => {
       let formPayload = {
         id: props.id,
         comment: review.comment,
-        rating: review.rating,
-        park: props.review.park.id
+        rating: ratingNumber,
+        park: props.review.park
       }
 
       if (validForSubmission()) {
-         fetch(`/api/v1/review/${formPayload.id}`, {
+        fetch(`/api/v1/review/edit/${formPayload.id}`, {
+          credentials: "same-origin",
           method: "PUT",
           body: JSON.stringify(formPayload),
           headers: { "Content-Type": "application/json" }
@@ -63,13 +64,11 @@ const EditReviewForm = (props) => {
             }).then(resp => {
               return resp.json();
             }).then(body => {
-            debugger
-              setReview({...body})
+              props.newReview2();
             })
         setReview(defaultReview)
       }
     }
-
 
     const allRatings = ["1", "2", "3", "4", "5"]
     const ratingOptions = [""].concat(allRatings).map((option) => {
@@ -105,7 +104,6 @@ const EditReviewForm = (props) => {
               </div>
             </div>
           </Fragment>
-
         )
   } else {
     return("")
