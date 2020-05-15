@@ -475,6 +475,11 @@ a:focus {
   color: #379683;
 }
 
+.review-quote {
+  position: absolute;
+  z-index: 1;
+}
+
 /* Review Slider */
 
 .wrapper-slider {
@@ -484,10 +489,13 @@ a:focus {
   background-size: cover;
 }
 
-.item-slider {
+.slick-slider {
   background-color: rgba(5,56,107,.7);
+}
+
+.item-slider {
   color: #fff;
-  padding: 1.875rem;
+  padding: 3.25rem 6rem;
   text-align: center;
   font-size: 1.25rem;
 }
@@ -497,6 +505,16 @@ a:focus {
   top: 140px;
 }
 
+.item-slider a:after {
+  font-family: fontAwesome;
+  content: '\f0da';
+  margin-left: .625rem;
+}
+
+.item-slider a:hover {
+  color: #fff;
+}
+
 /* Dots */
 .slick-dotted.slick-slider
 {
@@ -504,7 +522,7 @@ a:focus {
 }
 
 .slick-dots {
-    bottom: 0;
+    bottom: 1rem;
 }
 
 .slick-dots li {
@@ -534,12 +552,12 @@ a:focus {
     width: 30px;
     height: 30px;
     opacity: .75;
-    color: #379683;
+    color: #fff;
 }
 
 .slick-dots li.slick-active button:before {
     opacity: .75;
-    color: #379683;
+    color: #fff;
 }
 
 /* Footer */
