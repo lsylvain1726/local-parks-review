@@ -34,6 +34,13 @@ const ParkShowContainer = (props) => {
     parkStatus = "Open"
   }
 
+  let exceptionDateHide = ""
+  if(park.exceptionEndDate != null) {
+    exceptionDateHide = "show"
+  } else {
+    exceptionDateHide = "hide"
+  }
+
   return (
     <Fragment>
       <div className={`wrapper-interior-header wrapper-interior-park`}>
@@ -44,7 +51,12 @@ const ParkShowContainer = (props) => {
         </div>
       </div>
       <div className="wrapper-individual-park">
-        <ParkShow key={park.id} data={park}/>
+        <ParkShow 
+          key={park.id} 
+          data={park}
+          parkStatus={parkStatus}
+          exceptionDateHide={exceptionDateHide}
+        />
       </div>
     </Fragment>
   )

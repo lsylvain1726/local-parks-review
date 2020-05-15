@@ -2,6 +2,7 @@ import React, {useState, useEffect, Fragment} from "react"
 import ReviewFormContainer from "./ReviewFormContainer"
 import ReviewShow from "./ReviewShow"
 
+
 const ParkReviewContainer = (props) => {
 
   const [listReviews, setListReviews] = useState([])
@@ -106,13 +107,15 @@ const editReview = (listReviews) => {
 
     if(props.park.id === review.park.id) {
       return(
+      <div>
         <ReviewShow
-          key={review.id} 
+          key={review.id}
+          id={review.id}
           review={review}
           starClass={starClass}
           deleteReview={deleteReview}
-          editReview={editReview}
         />
+      </div>
       )
     }
   })
