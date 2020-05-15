@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-const VisitorFormContainer = () => {
+import { Link } from "react-router-dom";
+
+const Login = () => {
   const defaultFormValue = {
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
   };
   const [visitor, setVisitor] = useState(defaultFormValue);
-  const [msg, setMsg] = useState("");
+  const [message, setMessage] = useState(null);
   const handleInputChange = (event) => {
     setVisitor({
       ...visitor,
@@ -18,73 +18,40 @@ const VisitorFormContainer = () => {
     event.preventDefault();
     submitForm();
   };
-  const clearForm = () => {
-    setVisitor(defaultFormValue);
-  };
   const submitForm = () => {
-    fetch("/api/v1/visitors/signup", {
+    fetch("api/v1/visitors/login", {
       method: "POST",
       body: JSON.stringify(visitor),
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error(`${response.status} (${response.statusText})`);
-        }
+        return response.json();
       })
       .then((data) => {
-        if (data.id === null) {
-          setVisitor(data);
-          setMsg(
-            <div className="callout alert">
-              Email already exists, please choose another one!
-            </div>
+        if (data.id) {
+          setMessage(
+            <div className="callout success">You have been logged in.</div>
           );
         } else {
-          clearForm();
-          setMsg(<div className="callout success">Visitor saved!</div>);
+          setMessage(
+            <div className="callout alert">Wrong email or password.</div>
+          );
         }
+        setVisitor(defaultFormValue)
       })
       .catch((error) => console.error(`Error in fetch: ${error.message}`));
   };
+
   return (
     <div className="row">
       <div className="small-9 small-centered columns">
         <form className="log-in-form" onSubmit={handleSubmit}>
           <div className="form-icons">
-            <h4 className="wrapper-state-title">Register</h4>
-            {msg}
+            <h4 className="text-center wrapper-state-title">
+              Log in with your email
+            </h4>
             <div className="input-group">
-              <span className="input-group-label">
-                <i className="fa fa-user"></i>
-              </span>
-              <input
-                className="input-group-field"
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={visitor.firstName}
-                onChange={handleInputChange}
-                placeholder="First name"
-                required
-              />
-            </div>
-            <div className="input-group">
-              <span className="input-group-label">
-                <i className="fa fa-user-o"></i>
-              </span>
-              <input
-                className="input-group-field"
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={visitor.lastName}
-                onChange={handleInputChange}
-                placeholder="Last name"
-                required
-              />
+              <h3>{message}</h3>
             </div>
             <div className="input-group">
               <span className="input-group-label">
@@ -119,10 +86,16 @@ const VisitorFormContainer = () => {
               />
             </div>
           </div>
-          <button className="button expanded">Sign Up</button>
+          <button className="button expanded">Sign In</button>
+          <div className="input-group">
+            <h4 className="text-center">
+              <Link to="/signup">Create an account</Link>
+            </h4>
+          </div>
         </form>
       </div>
     </div>
   );
 };
-export default VisitorFormContainer;
+
+export default Login;
