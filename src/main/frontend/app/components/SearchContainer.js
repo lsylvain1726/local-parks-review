@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ParkList from "./ParkList"
+import { EqualHeight } from 'react-equal-height';
 
 const Search = (props) => {
   const allParks = props.parks
@@ -38,6 +39,12 @@ const Search = (props) => {
   //   setSearchResults(results);
   // }, [searchTerm]);
 
+  const listSearchResults = searchResults.map(park => {
+    return (
+      <ParkList key={park.id} data={park}/>
+    )
+  })
+
   return(
     <div className="search-bar">
       <input
@@ -46,9 +53,11 @@ const Search = (props) => {
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        {searchResults.map(park => {
-          return <ParkList key={park.id} data={park}/>
-        })}
+        <div className="test">
+        <EqualHeight>
+          {listSearchResults}
+        </EqualHeight>
+        </div>
 
         {/* <ul>
           {searchResults.map(item => (

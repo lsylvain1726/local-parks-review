@@ -8,7 +8,7 @@ const ParkList = (props) => {
   return (
     <div className="small-12 medium-4 columns">
       <div className="card-park">
- 
+        <EqualHeightElement name="card">
           <div className="card-park-header">
             <img src={image} alt={name}/>
             <p className={`status-title ${props.parkStatusClass}`}>{props.parkStatus}</p>
@@ -22,7 +22,7 @@ const ParkList = (props) => {
               More info
             </Link>
           </div>
-       
+        </EqualHeightElement>
       </div>
     </div>
   );

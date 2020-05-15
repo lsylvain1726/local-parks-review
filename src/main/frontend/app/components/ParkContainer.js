@@ -44,6 +44,7 @@ const ParkContainer = (props) => {
         </div>
         <div className="wrapper-parks">
           <div className="row">
+  
             <SearchContainer 
               parks={parks}
             />
