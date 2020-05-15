@@ -1,62 +1,87 @@
-import React, {useState, useEffect, Fragment} from "react"
-import ReviewFormContainer from "./ReviewFormContainer"
-import ReviewShow from "./ReviewShow"
-
+import React, { useState, useEffect, Fragment } from "react";
+import ReviewFormContainer from "./ReviewFormContainer";
+import ReviewShow from "./ReviewShow";
+import { Link } from "react-router-dom";
 
 const ParkReviewContainer = (props) => {
+  const [listReviews, setListReviews] = useState([]);
+  const [visitor, setVisitor] = useState(null);
+  const [review, setReviewForm] = useState(null);
 
   const [listReviews, setListReviews] = useState([])
   const [reviewUpdated, setReviewUpdated] = useState(false)
+  useEffect(() => {
+    fetch("/api/v1/visitors/isLoggedIn", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data.email != "anonymousUser") {
+          setReviewForm(
+            <ReviewFormContainer addReview={addReview} park={props.park} />
+          );
+        } else {
+          setReviewForm(
+            <div className="callout text-center wrapper-state-title">
+              <h4>You must be logged to leave a review</h4>
+              <Link to="/login">Click here to log in</Link>
+            </div>
+          );
+        }
+        setVisitor(data.email);
+      })
+      .catch((error) => console.error(`Error in fetch: ${error.message}`));
+  }, [visitor]);
 
-  const addReview = formPayload => {
+  const addReview = (formPayload) => {
     fetch(`/api/v1/review`, {
       method: "POST",
       body: JSON.stringify(formPayload),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
     })
-    .then(response => {
-      if (response.ok) {
-        return response
-      } else {
-        let errorMessage = `${response.status} (${response.statusText})`,
-          error = new Error(errorMessage)
-        throw error
-      }
-    })
-    .then(resp => {
-      return resp.json()
-    })
-    .then(json => {
-      setListReviews([
-        ...listReviews,
-        json
-      ])
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`))
-  }
+      .then((response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage);
+          throw error;
+        }
+      })
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((json) => {
+        setListReviews([...listReviews, json]);
+      })
+      .catch((error) => console.error(`Error in fetch: ${error.message}`));
+  };
 
   const loadReviews = () => {
     fetch(`/api/v1/review`)
       .then((response) => {
         if (response.ok) {
-          return response
+          return response;
         } else {
           let errorMessage = `${response.status} (${response.statusText})`,
-            error = new Error(errorMessage)
-          throw error
+            error = new Error(errorMessage);
+          throw error;
         }
       })
       .then((result) => {
-        return result.json()
+        return result.json();
       })
       .then((json) => {
-        setListReviews(json)
+        setListReviews(json);
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
-  useEffect(loadReviews, [])
+        console.log(error);
+      });
+  };
+  useEffect(loadReviews, []);
 
   const deleteReview = (reviewSubmitted) => {
   debugger
@@ -68,11 +93,11 @@ const ParkReviewContainer = (props) => {
       })
       .then((response) => {
         if (response.ok) {
-          return response
+          return response;
         } else {
           let errorMessage = `${response.status} (${response.statusText})`,
-            error = new Error(errorMessage)
-          throw (error)
+            error = new Error(errorMessage);
+          throw error;
         }
       })
       .then(response => response.json())
@@ -103,13 +128,18 @@ const editReview = (listReviews) => {
         setListReviews({...body})
         setLoading(false)
       })
-  }
+      .then((body) => {
+        setUpdatedContractor({ ...body });
+        setLoading(false);
+      });
+  };
 
   const newReview = () =>{
     setReviewUpdated(!reviewUpdated)
   }
 
   const reviewListItems = listReviews.map((review) => {
+    let starClass = review.rating;
 
     let starClass = review.rating
 
@@ -128,19 +158,18 @@ const editReview = (listReviews) => {
       </div>
       )
     }
-  })
+  });
 
   return (
     <Fragment>
-      <ReviewFormContainer 
-        addReview={addReview}
-        park={props.park}  
-      />
+      {review}
       <hr />
-      <h2 className="review-header-title">What People Say About {props.park.name}</h2>
+      <h2 className="review-header-title">
+        What People Say About {props.park.name}
+      </h2>
       {reviewListItems}
     </Fragment>
-  )
-}
+  );
+};
 
-export default ParkReviewContainer
+export default ParkReviewContainer;

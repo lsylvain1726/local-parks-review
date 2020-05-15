@@ -6,7 +6,7 @@ import { EqualHeightElement } from 'react-equal-height';
 const ParkList = (props) => {
   const { id, name, state, image } = props.data
   return (
-    <div className="small-12 medium-4 columns">
+    <div className={`small-12 medium-4 columns ${props.lastColumn}`}>
       <div className="card-park">
         <EqualHeightElement name="card">
           <div className="card-park-header">

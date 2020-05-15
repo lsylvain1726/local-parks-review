@@ -1,6 +1,7 @@
 package com.launchacademy.localparksreview.services;
 
 import com.launchacademy.localparksreview.seeders.ParkSeeder;
+import com.launchacademy.localparksreview.seeders.UpdateSeeder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import java.util.Date;
 
 public class ScheduledTasks {
     @Autowired
-    private ParkSeeder seeder;
+    private UpdateSeeder seeder;
     private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
