@@ -6,6 +6,7 @@ import ReviewShow from "./ReviewShow"
 const ParkReviewContainer = (props) => {
 
   const [listReviews, setListReviews] = useState([])
+  const [reviewUpdated, setReviewUpdated] = useState(false)
 
   const addReview = formPayload => {
     fetch(`/api/v1/review`, {
@@ -58,13 +59,12 @@ const ParkReviewContainer = (props) => {
   useEffect(loadReviews, [])
 
   const deleteReview = (reviewSubmitted) => {
-    fetch(`api/v1/review/${id}`, {
+  debugger
+    fetch(`api/v1/review/delete/${reviewSubmitted}`, {
         credentials: 'same-origin',
         method: 'DELETE',
-        body: JSON.stringify(contractor),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        body: JSON.stringify(listReviews),
+        headers: {'Content-Type': 'application/json'}
       })
       .then((response) => {
         if (response.ok) {
@@ -78,7 +78,7 @@ const ParkReviewContainer = (props) => {
       .then(response => response.json())
       .then(json => {
         setLoading(false)
-        setContractors([...contractors,
+        setListReviews([...listReviews,
           json
         ])
       })
@@ -86,7 +86,11 @@ const ParkReviewContainer = (props) => {
 }
 
 const editReview = (listReviews) => {
-    fetch(`/api/v1/review/${listReviews}`)
+    fetch(`/api/v1/review/edit/${listReviews.id}`, {
+      method: "PUT",
+      body: JSON.stringify(listReviews),
+      headers: { "Content-Type": "application/json" }
+    })
     .then((resp) => {
       if (resp.ok){
         return resp
@@ -96,9 +100,13 @@ const editReview = (listReviews) => {
       }).then(resp => {
         return resp.json();
       }).then(body => {
-        setUpdatedContractor({...body})
+        setListReviews({...body})
         setLoading(false)
       })
+  }
+
+  const newReview = () =>{
+    setReviewUpdated(!reviewUpdated)
   }
 
   const reviewListItems = listReviews.map((review) => {
@@ -114,6 +122,8 @@ const editReview = (listReviews) => {
           review={review}
           starClass={starClass}
           deleteReview={deleteReview}
+          newReview={newReview}
+          loadReviews={loadReviews}
         />
       </div>
       )
