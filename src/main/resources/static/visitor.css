@@ -15,3 +15,8 @@ form .form-icons .fa {
   color: white;
   width: 1rem;
 }
+
+form .log-in-form {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
