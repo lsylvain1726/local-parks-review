@@ -1,6 +1,7 @@
 import React, { useEffect , useState, Fragment} from "react";
 import ParkList from "../components/ParkList";
 import { EqualHeight } from 'react-equal-height';
+import SearchContainer from './SearchContainer'
 
 const ParkContainer = (props) => {
   const [parks, setParks] = useState([]);
@@ -26,9 +27,12 @@ const ParkContainer = (props) => {
         });
       });
   }, []);
+
+
   const listOfParks = parks.map(park => {
     return <ParkList key={park.id} data={park}/>
   })
+
   return (
     <Fragment>
       <div className={`wrapper-interior-header`}>
@@ -40,9 +44,12 @@ const ParkContainer = (props) => {
         </div>
         <div className="wrapper-parks">
           <div className="row">
-            <EqualHeight>
+            <SearchContainer 
+              parks={parks}
+            />
+            {/* <EqualHeight>
               {listOfParks}
-            </EqualHeight>
+            </EqualHeight> */}
           </div>
         </div>
     </Fragment>

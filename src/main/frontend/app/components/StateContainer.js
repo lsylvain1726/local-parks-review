@@ -45,7 +45,6 @@ const StateContainer = (props) => {
             </div>
               {listOfStates}
           </div>
-          <SearchContainer />
         </div>
       </Fragment>
     );

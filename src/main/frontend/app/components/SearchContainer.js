@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import ParkList from "./ParkList"
 
 const Search = (props) => {
+  const allParks = props.parks
   const [searchTerm, setSearchTerm] = useState("")
   const [searchResults, setSearchResults] = useState([])
 
@@ -18,13 +20,23 @@ const Search = (props) => {
     "Sinkedin"
   ];
 
+
   useEffect(() => {
-    const results = people.filter(person =>
-      person.toLowerCase().includes(searchTerm)
+    const results = allParks.filter(park => 
+      park.state.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setSearchResults(results);
+    console.log(results)
+    setSearchResults(results)
   }, [searchTerm]);
-  console.log(searchResults)
+  //console.log(searchResults)
+
+  // useEffect(() => {
+  //   const results = people.filter(person =>
+  //     person.toLowerCase().includes(searchTerm)
+  //   );
+  //   console.log(results)
+  //   setSearchResults(results);
+  // }, [searchTerm]);
 
   return(
     <div className="search-bar">
@@ -34,11 +46,15 @@ const Search = (props) => {
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        <ul>
+        {searchResults.map(park => {
+          return <ParkList key={park.id} data={park}/>
+        })}
+
+        {/* <ul>
           {searchResults.map(item => (
             <li>{item}</li>
           ))}
-        </ul>
+        </ul> */}
     </div>
   )
 
