@@ -497,6 +497,15 @@ a:focus {
   top: 140px;
 }
 
+.search-bar {
+  padding: 1rem .875rem;
+}
+
+.search-bar-title {
+  color:#05386B;
+  font-size: 1.5rem
+}
+
 /* Dots */
 .slick-dotted.slick-slider
 {
@@ -529,6 +538,7 @@ a:focus {
     font-size: 18px;
     line-height: 30px;
     position: absolute;
+    content: "•";
     top: 0;
     left: 0;
     width: 30px;

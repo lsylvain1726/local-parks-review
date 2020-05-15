@@ -1,43 +1,45 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import ParkList from "./ParkList"
 import { EqualHeight } from 'react-equal-height';
 
 const Search = (props) => {
-  const allParks = props.parks
   const [searchTerm, setSearchTerm] = useState("")
   const [searchResults, setSearchResults] = useState([])
+  const [parks, setParks] = useState([])
 
   const handleSearchChange = event => {
     setSearchTerm(event.target.value)
   }
 
-  const people = [
-    "Siri",
-    "Alexa",
-    "Google",
-    "Facebook",
-    "Twitter",
-    "Linkedin",
-    "Sinkedin"
-  ];
-
+  useEffect(() => {
+    fetch("api/v1/parks")
+      .then((response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage);
+          throw error;
+        }
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        setParks(data);
+        setSearchResults(data)
+      })
+      .catch((error) => {
+        error.text().then((errorMessage) => {
+          this.props.dispactch(displayError(errorMessage));
+        });
+      });
+  }, []);
 
   useEffect(() => {
-    const results = allParks.filter(park => 
+    const results = parks.filter(park => 
       park.state.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    console.log(results)
     setSearchResults(results)
   }, [searchTerm]);
-  //console.log(searchResults)
-
-  // useEffect(() => {
-  //   const results = people.filter(person =>
-  //     person.toLowerCase().includes(searchTerm)
-  //   );
-  //   console.log(results)
-  //   setSearchResults(results);
-  // }, [searchTerm]);
 
   const lastIndex = searchResults.length - 1
   const listSearchResults = searchResults.map((park, i) => {
@@ -71,25 +73,22 @@ const Search = (props) => {
   })
 
   return(
-    <div className="search-bar">
-      <input
-          type="text"
-          placeholder="Search"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-        <div className="test">
+    <Fragment>
+      <div className="search-bar">
+        <h3 className="search-bar-title">Search By State</h3>
+        <input
+            type="text"
+            placeholder="Search By State"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+      </div>
+      <div className="search-results">
         <EqualHeight>
           {listSearchResults}
         </EqualHeight>
-        </div>
-
-        {/* <ul>
-          {searchResults.map(item => (
-            <li>{item}</li>
-          ))}
-        </ul> */}
-    </div>
+      </div>
+    </Fragment>
   )
 
 }
