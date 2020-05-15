@@ -5,7 +5,7 @@ import ParkContainer from "./ParkContainer"
 import ParkShowContainer from "./ParkShowContainer"
 import StateContainer from "./StateContainer"
 import ParksByStateContainer from "./ParksByStateContainer"
-import Login from './Login';
+import LoginContainer from './LoginContainer';
 const NavBar = () => {
   return(
     <BrowserRouter>
@@ -31,7 +31,7 @@ const NavBar = () => {
                         <li><Link to="/parks/Vermont">Vermont</Link></li>
                       </ul>
                     </li>
-                    <li><Link to="/login">Login</Link></li>
+                    <li><Link to="/login">Visitor</Link></li>
                 </ul>
               </div>
             </div>
@@ -43,7 +43,7 @@ const NavBar = () => {
         <Route exact path="/parks" component={ParkContainer} />
         <Route exact path="/parks/:state/:id" component={ParkShowContainer} />
         <Route exact path="/parks/:state" component={ParksByStateContainer} />
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/login" component={LoginContainer} />
         <Route exact path="/signup" component={VisitorFormContainer} />
         <Route exact path="/logout" component={StateContainer} />
         <Route exact path="/" component={StateContainer} />
