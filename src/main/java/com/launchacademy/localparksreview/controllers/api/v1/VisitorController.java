@@ -40,7 +40,9 @@ public class VisitorController {
     }
 
     @PostMapping("/isLoggedIn")
-    public String isLoggedIn() {
-        return securityService.findLoggedInUsername();
+    public Visitor isLoggedIn() {
+        Visitor visitorLoggedIn = new Visitor();
+        visitorLoggedIn.setEmail(securityService.findLoggedInUsername());
+        return visitorLoggedIn;
     }
 }
