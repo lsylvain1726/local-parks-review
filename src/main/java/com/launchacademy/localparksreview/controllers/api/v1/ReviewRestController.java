@@ -73,9 +73,10 @@ public class ReviewRestController {
         }).orElseThrow(() -> new InvalidReviewException());
   }
 
-  @DeleteMapping ("/delete/{id}")
-  public Review deleteReview(@PathVariable Integer id){
-    reviewRepo.deleteById(reviewRepo.findById(id));
-    return reviewRepo.findAll();
-  }
+//  @DeleteMapping ("/delete/{id}")
+//  public Iterable<Review> deleteReview(@PathVariable Integer id){
+//    Optional<Review> review = reviewRepo.findById(id);
+//    reviewRepo.deleteById(id);
+//    return reviewRepo.findAll();
+//  }
 }
