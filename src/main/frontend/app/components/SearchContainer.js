@@ -39,9 +39,34 @@ const Search = (props) => {
   //   setSearchResults(results);
   // }, [searchTerm]);
 
-  const listSearchResults = searchResults.map(park => {
+  const lastIndex = searchResults.length - 1
+  const listSearchResults = searchResults.map((park, i) => {
+    let parkStatus = ""
+    let parkStatusClass = ""
+
+    if(park.exceptionName != null) {
+      parkStatus = park.exceptionName
+      parkStatusClass = "closed"
+    } else {
+      parkStatus = "Open"
+      parkStatusClass = "open"
+    }
+
+    let lastColumn = ""
+    if (i === lastIndex) {
+      lastColumn = "end"
+    } else {
+      lastColumn = "next"
+    }
+
     return (
-      <ParkList key={park.id} data={park}/>
+      <ParkList 
+        key={park.id} 
+        data={park}
+        parkStatus={parkStatus}
+        parkStatusClass={parkStatusClass}
+        lastColumn={lastColumn}
+      />
     )
   })
 

@@ -28,11 +28,6 @@ const ParkContainer = (props) => {
       });
   }, []);
 
-
-  const listOfParks = parks.map(park => {
-    return <ParkList key={park.id} data={park}/>
-  })
-
   return (
     <Fragment>
       <div className={`wrapper-interior-header`}>
@@ -47,6 +42,7 @@ const ParkContainer = (props) => {
   
             <SearchContainer 
               parks={parks}
+
             />
             {/* <EqualHeight>
               {listOfParks}
