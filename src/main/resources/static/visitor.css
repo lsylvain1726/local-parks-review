@@ -5,11 +5,11 @@ form .form-icons h4 {
   margin-bottom: 1rem;
 }
 form .form-icons .input-group-label {
-  background-color: #1779ba;
-  border-color: #1779ba;
+  background-color: #379683;
+  border-color: #379683;
 }
 form .form-icons .input-group-field {
-  border-color: #1779ba;
+  border-color: #379683;
 }
 form .form-icons .fa {
   color: white;
@@ -19,4 +19,10 @@ form .form-icons .fa {
 form .log-in-form {
   margin-top: 3rem;
   margin-bottom: 3rem;
+}
+
+.form-icons .wrapper-state-title {
+  color: #05386B;
+  margin-top: 2rem;
+  margin-bottom: 0;
 }

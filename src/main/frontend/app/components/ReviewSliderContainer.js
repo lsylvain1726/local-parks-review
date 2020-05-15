@@ -43,6 +43,7 @@ const ReviewSliderContainer = (props) => {
       <div className="row">
         <div className="small-12 columns">
           <div className="review-slider">
+            <img className="review-quote" src="https://local-parks.s3.us-east-2.amazonaws.com/quotes-transparent.png" alt="quote" />
             <Slider 
               dots={true}
               arrows={false}

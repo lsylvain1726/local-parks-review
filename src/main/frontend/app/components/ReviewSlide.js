@@ -5,7 +5,7 @@ const ReviewSlide = (props) => {
   return (
     <div className="item-slider">
       <p>{props.review.comment}</p>
-      <a href={`/parks/${props.review.park.state.name}/${props.review.park.state.id}`}>{props.review.park.name}</a>
+      <a href={`/parks/${props.review.park.state.name}/${props.review.park.id}`}>{props.review.park.name}</a>
     </div>
   )
 }
