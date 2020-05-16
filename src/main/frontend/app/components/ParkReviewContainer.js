@@ -7,8 +7,6 @@ const ParkReviewContainer = (props) => {
   const [listReviews, setListReviews] = useState([]);
   const [visitor, setVisitor] = useState(null);
   const [review, setReviewForm] = useState(null);
-
-  const [listReviews, setListReviews] = useState([])
   const [reviewUpdated, setReviewUpdated] = useState(false)
   useEffect(() => {
     fetch("/api/v1/visitors/isLoggedIn", {
@@ -140,9 +138,6 @@ const editReview = (listReviews) => {
 
   const reviewListItems = listReviews.map((review) => {
     let starClass = review.rating;
-
-    let starClass = review.rating
-
     if(props.park.id === review.park.id) {
       return(
       <div>

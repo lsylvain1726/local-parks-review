@@ -30,7 +30,6 @@ public class SecurityService {
                 return null;
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
         }
         return SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
     }

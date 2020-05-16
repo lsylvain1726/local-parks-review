@@ -22,7 +22,7 @@ const LoginContainer = () => {
         } else {
           setLoginForm(
             <div className="callout text-center">
-              <Link className="button alert large" to="/logout">Log Out</Link>
+              <Link onClick={handleClick} className="button alert large" to="/logout">Log Out</Link>
             </div>
           );
           setVisitor(data.email);
@@ -30,6 +30,11 @@ const LoginContainer = () => {
       })
       .catch((error) => console.error(`Error in fetch: ${error.message}`));
   }, [visitor]);
+
+  const handleClick = event => {
+    event.preventDefault();
+    window.location.href = "/logout"
+  } 
 
   return <div>
       { loginForm }
